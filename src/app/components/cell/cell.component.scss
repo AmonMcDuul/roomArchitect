@@ -1,0 +1,25 @@
+.grid-cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff; 
+}
+
+.grid-cell.colored {
+  background-color: #add8e6;
+}
+
+.cdk-drag {
+  position: absolute; 
+  z-index: 1000; 
+  pointer-events: none; 
+}
+
+.cdk-drag-preview {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  background-color: transparent; 
+}

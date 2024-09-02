@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="sidebar">
+      <h3>Available Objects</h3>
+      <app-object-form (objectCreated)="objects = objectService.getObjects()"></app-object-form>
+      <ul>
+        <li
+          *ngFor="let object of objects"
+          [class.selected]="selectedObject?.id === object.id"
+          (click)="selectObject(object)"
+        >
+          Object {{ object.id }} - {{ object.width }}x{{ object.height }} -
+          {{ object.mustTouchWall ? 'Must Touch Wall' : 'Free Placement' }}
+          <button (click)="removeObject(object); $event.stopPropagation();">
+            Remove
+          </button>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="grid-container">
+      <div class="grid" cdkDropList (cdkDropListDropped)="onDrop($event)">
+        <div *ngFor="let row of grid; let rowIndex = index" class="grid-row">
+          <app-cell
+            *ngFor="let col of row; let colIndex = index"
+            [row]="rowIndex"
+            [col]="colIndex"
+            [isColored]="grid[rowIndex][colIndex] === 1"
+            [object]="getObjectAt(rowIndex, colIndex)"
+            (cellClick)="onCellClick(rowIndex, colIndex)"
+            [attr.data-row]="rowIndex"
+            [attr.data-col]="colIndex"
+            cdkDrag
+            [cdkDragData]="getObjectAt(rowIndex, colIndex)"
+          >
+          </app-cell>
+        </div>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
+
+</div>
+  
+
+
+  
