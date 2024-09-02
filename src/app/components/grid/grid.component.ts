@@ -14,8 +14,8 @@ import { ObjectFormComponent } from '../object-form/object-form.component';
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit {
-  gridWidth = 10;
-  gridHeight = 14;
+  gridWidth = 20;
+  gridHeight = 26;
   grid: number[][] = [];
   objects: DrawableObject[] = [];
   selectedObject: DrawableObject | null = null;

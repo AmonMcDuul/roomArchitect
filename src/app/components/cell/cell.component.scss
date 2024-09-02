@@ -1,6 +1,6 @@
 .grid-cell {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border: 1px solid #ccc;
   position: relative;
   display: flex;
@@ -17,9 +17,4 @@
   position: absolute; 
   z-index: 1000; 
   pointer-events: none; 
-}
-
-.cdk-drag-preview {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  background-color: transparent; 
 }

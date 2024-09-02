@@ -1,7 +1,7 @@
 <div class="container">
     <div class="sidebar">
       <h3>Available Objects</h3>
-      <app-object-form (objectCreated)="objects = objectService.getObjects()"></app-object-form>
+      <app-object-form (objectCreated)="objects = objectService.getObjects()" (objectCreated)="updateGrid()"></app-object-form>
       <ul>
         <li
           *ngFor="let object of objects"
