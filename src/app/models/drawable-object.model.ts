@@ -3,6 +3,7 @@ export interface DrawableObject {
     name: string;
     width: number;
     height: number;
+    image: string;
     // x: number;
     // y: number;
     mustTouchWall: boolean;

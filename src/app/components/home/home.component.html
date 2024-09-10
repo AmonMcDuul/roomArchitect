@@ -17,6 +17,11 @@
       </div>
     
       <div class="form-group">
+        <label for="image">image:</label>
+        <input type="string" id="image" formControlName="image" />
+      </div>
+
+      <div class="form-group">
         <label>
           <input type="checkbox" formControlName="mustTouchWall" />
           Must Touch Wall
@@ -46,8 +51,7 @@
           [class.selected]="selectedItem?.name === object.name"
           (click)="selectItem(object)"
         >
-          Object {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }} -
-          {{ object.mustTouchWall ? 'Must Touch Wall' : 'Free Placement' }}
+          {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
           <button (click)="removeObject(object); $event.stopPropagation();">
             Remove
           </button>
@@ -68,6 +72,7 @@
          [style.width.px]="item.width"
          [style.height.px]="item.height"
          (click)="selectItem(item)">
+         <img src="{{ item.image }}" alt="{{ item.image }}" class="object-image">
       {{ item.name }}
     </div>
   </div>

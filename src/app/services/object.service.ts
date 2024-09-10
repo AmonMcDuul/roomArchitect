@@ -12,16 +12,18 @@ export class ObjectService {
   }
 
   initializeDefaultObjects(): void {
-    this.addObject("toilet", 90, 60, true);
-    this.addObject("Bad",170, 80, false);
-    this.addObject("Wasbak",60, 40, true);
+    this.addObject("toilet", 90, 60, "assets/images/toilet.png", true);
+    this.addObject("Bad",170, 80, "assets/images/bad.png", false);
+    this.addObject("Wasbak",60, 40, "assets/images/wasbak.png", true);
+    this.addObject("Douche",90, 90, "assets/images/douche.png", true);
   }
 
-  addObject(name: string, width: number, height: number, mustTouchWall: boolean): DrawableObject {
+  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean): DrawableObject {
     const newObject: DrawableObject = {
       name,
       width: width * 3,
       height: height * 3,
+      image,
       mustTouchWall,
     };
     this.objects.push(newObject);

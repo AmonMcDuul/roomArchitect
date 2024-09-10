@@ -143,3 +143,11 @@
     cursor: not-allowed;
   }
   
+  .object-image {
+    width: 100%; 
+    height: auto; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }

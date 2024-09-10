@@ -37,6 +37,7 @@ export class HomeComponent {
       name: ["", [Validators.required]],
       width: [1, [Validators.required, Validators.min(1)]],
       height: [1, [Validators.required, Validators.min(1)]],
+      image: [""],
       mustTouchWall: [false],
     });
   }
@@ -86,8 +87,8 @@ export class HomeComponent {
 
   onSubmit(): void {
     if (this.objectForm.valid) {
-      const { name, width, height, mustTouchWall } = this.objectForm.value;
-      this.objectService.addObject(name, width, height, mustTouchWall);
+      const { name, width, height, image, mustTouchWall } = this.objectForm.value;
+      this.objectService.addObject(name, width, height, image, mustTouchWall);
       this.objectForm.reset({ width: 1, height: 1, mustTouchWall: false });
     }
   }
