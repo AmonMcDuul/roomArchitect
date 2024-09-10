@@ -1,8 +1,9 @@
 export interface DrawableObject {
-    id: number;
+    // id: number;
+    name: string;
     width: number;
     height: number;
-    x: number;
-    y: number;
+    // x: number;
+    // y: number;
     mustTouchWall: boolean;
   }
