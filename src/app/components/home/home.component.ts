@@ -32,7 +32,7 @@ export class HomeComponent {
   objectForm: FormGroup;
 
   constructor(private fb: FormBuilder, private objectService: ObjectService) {
-    this.updateGridSize(20, 26);
+    this.updateGridSize(26, 26);
     this.objectForm = this.fb.group({
       name: ["", [Validators.required]],
       width: [1, [Validators.required, Validators.min(1)]],
@@ -77,6 +77,7 @@ export class HomeComponent {
       var temp = this.selectedItem.width;
       this.selectedItem.width = this.selectedItem.height;
       this.selectedItem.height = temp;
+      this.selectedItem.rotation = (this.selectedItem.rotation + 90) % 360;    
     }
   }
 

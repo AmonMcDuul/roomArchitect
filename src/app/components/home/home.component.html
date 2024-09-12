@@ -1,6 +1,7 @@
 <div class="main-container">
      <div>
     <form [formGroup]="objectForm" class="object-form">
+      <h3>Create object</h3>
       <div class="form-group">
         <label for="width">Name:</label>
         <input type="string" id="name" formControlName="name" />
@@ -29,16 +30,20 @@
       </div>
       <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add Object</button>
     </form>
-          <div *ngIf="selectedItem" class="resize-inputs">
+          <div *ngIf="selectedItem" class="resize-inputs" class="object-form">
         <h3>Resize {{ selectedItem.name }}</h3>
-        <label>
-          Width (cm):
-          <input type="number" [(ngModel)]="inputWidthCm" (input)="updateSizeInCm()" />
-        </label>
-        <label>
-          Height (cm):
-          <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
-        </label>
+        <div class="form-group">
+          <label>
+            Width (cm):
+            <input type="number" [(ngModel)]="inputWidthCm" (input)="updateSizeInCm()" />
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            Height (cm):
+            <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
+          </label>
+        </div>
         <button (click)="rotateObject()">Rotate</button>
       </div>
      </div>
@@ -53,7 +58,7 @@
         >
           {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
           <button (click)="removeObject(object); $event.stopPropagation();">
-            Remove
+            X
           </button>
         </li>
       </ul>
@@ -62,19 +67,28 @@
   <div class="example-boundary" [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight">
     <div class="grid-background" [style.gridTemplateColumns]="'repeat(' + gridX + ', ' + gridCellSize + 'px)'" [style.gridTemplateRows]="'repeat(' + gridY + ', ' + gridCellSize + 'px)'">
       <div *ngFor="let cell of gridCells" class="grid-cell"></div>
+      <div class="example-box"
+           cdkDragBoundary=".example-boundary"
+           cdkDrag
+           *ngFor="let item of items"
+           [ngStyle]="{'background-color': item == selectedItem ? 'aqua' : 'white'}"
+           [style.width.px]="item.width"
+           [style.height.px]="item.height"
+           (click)="selectItem(item)">
+      <button class="rotate-button" (click)="rotateObject()">&#10227;</button>
+      <img
+        [src]="item.image"
+        alt="{{ item.name }}"
+        class="object-image"
+        [ngStyle]="{
+          'transform': 'rotate(' + item.rotation + 'deg)',
+          'width.px': item.rotation === 90 || item.rotation === 270 ? item.height : item.width,
+          'height.px': item.rotation === 90 || item.rotation === 270 ? item.width : item.height
+        }">
+        {{ item.name }}
+      </div>
     </div>
 
-    <div class="example-box"
-         cdkDragBoundary=".example-boundary"
-         cdkDrag
-         *ngFor="let item of items"
-         [ngStyle]="{'background-color': item == selectedItem ? 'aqua' : 'white'}"
-         [style.width.px]="item.width"
-         [style.height.px]="item.height"
-         (click)="selectItem(item)">
-         <img src="{{ item.image }}" alt="{{ item.image }}" class="object-image">
-      {{ item.name }}
-    </div>
   </div>
 </div>
 

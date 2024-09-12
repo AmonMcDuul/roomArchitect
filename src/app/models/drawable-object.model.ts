@@ -7,4 +7,6 @@ export interface DrawableObject {
     // x: number;
     // y: number;
     mustTouchWall: boolean;
+    rotated: boolean;
+    rotation: number;
   }
