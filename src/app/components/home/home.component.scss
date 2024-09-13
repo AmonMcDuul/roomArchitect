@@ -170,4 +170,20 @@ button:hover {
   background-color: transparent;
   font-size: 24px;
   color: black;
+  z-index: 5;
+}
+
+.predefined-objects{
+  width: 280px;
+  padding: 20px;
+  background-color: #ffffff; 
+  border-right: 2px solid #b0bec5;
+  overflow-y: auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.predefined-objects-button {
+  margin: 2px;
+  display: flex;
+  width: 100%;
 }

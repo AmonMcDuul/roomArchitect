@@ -1,7 +1,7 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawableObject } from '../../models/drawable-object.model';
 import { ObjectService } from '../../services/object.service';
 
@@ -28,11 +28,12 @@ export class HomeComponent {
   inputHeightCm: number = 0; 
 
   items: DrawableObject[] = [];
+  predefinedItems: DrawableObject[] = [];
 
   objectForm: FormGroup;
 
   constructor(private fb: FormBuilder, private objectService: ObjectService) {
-    this.updateGridSize(26, 26);
+    this.updateGridSize(20, 26);
     this.objectForm = this.fb.group({
       name: ["", [Validators.required]],
       width: [1, [Validators.required, Validators.min(1)]],
@@ -45,6 +46,20 @@ export class HomeComponent {
   ngOnInit() {
     this.objectService.initializeDefaultObjects();
     this.items = this.objectService.getObjects();
+    this.predefinedItems = this.objectService.getPredefinedObjects();
+  }
+
+  addPredefinedItem(selectedPredefinedItem: DrawableObject) {
+    if (selectedPredefinedItem) {
+      this.objectService.addObject(
+        selectedPredefinedItem.name,
+        selectedPredefinedItem.width / 3,
+        selectedPredefinedItem.height / 3,
+        selectedPredefinedItem.image,
+        selectedPredefinedItem.mustTouchWall
+      );
+      this.items = this.objectService.getObjects();
+    }
   }
 
   updateGrid() {

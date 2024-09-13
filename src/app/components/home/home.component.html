@@ -30,6 +30,7 @@
       </div>
       <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add Object</button>
     </form>
+
           <div *ngIf="selectedItem" class="resize-inputs" class="object-form">
         <h3>Resize {{ selectedItem.name }}</h3>
         <div class="form-group">
@@ -47,6 +48,7 @@
         <button (click)="rotateObject()">Rotate</button>
       </div>
      </div>
+<div>
 
     <div class="sidebar">
       <h3>Available Objects</h3>
@@ -63,6 +65,17 @@
         </li>
       </ul>
     </div>
+    <div class="predefined-objects">
+      <h3>Select Predefined Object</h3>
+        <button class="predefined-objects-button"
+          *ngFor="let object of predefinedItems"
+          [class.selected]="selectedItem?.name === object.name"
+          (click)="addPredefinedItem(object)"
+        >
+          {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
+      </button>
+    </div>
+  </div>
 
   <div class="example-boundary" [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight">
     <div class="grid-background" [style.gridTemplateColumns]="'repeat(' + gridX + ', ' + gridCellSize + 'px)'" [style.gridTemplateRows]="'repeat(' + gridY + ', ' + gridCellSize + 'px)'">
