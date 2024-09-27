@@ -4,8 +4,8 @@ export interface DrawableObject {
     width: number;
     height: number;
     image: string;
-    // x: number;
-    // y: number;
+    x: number;
+    y: number;
     mustTouchWall: boolean;
     rotated: boolean;
     rotation: number;

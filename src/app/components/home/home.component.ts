@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawableObject } from '../../models/drawable-object.model';
 import { ObjectService } from '../../services/object.service';
+import { GridCell } from '../../models/gridCell.model';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ export class HomeComponent {
   gridCellSize = 30;
   gridColumns: string = "";
   gridRows: string = "";
-  gridCells: any[] = [];
+  gridCells: GridCell[] = [];
   boundaryWidth: number = 0;
   boundaryHeight: number = 0;
   resizing: boolean = false;
@@ -31,6 +32,7 @@ export class HomeComponent {
   predefinedItems: DrawableObject[] = [];
 
   objectForm: FormGroup;
+  isMouseDown = false;
 
   constructor(private fb: FormBuilder, private objectService: ObjectService) {
     this.updateGridSize(20, 26);
@@ -51,12 +53,16 @@ export class HomeComponent {
 
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
     if (selectedPredefinedItem) {
+      const x = 0; 
+      const y = 0;
       this.objectService.addObject(
         selectedPredefinedItem.name,
         selectedPredefinedItem.width / 3,
         selectedPredefinedItem.height / 3,
         selectedPredefinedItem.image,
-        selectedPredefinedItem.mustTouchWall
+        selectedPredefinedItem.mustTouchWall,
+        x,
+        y
       );
       this.items = this.objectService.getObjects();
     }
@@ -65,7 +71,8 @@ export class HomeComponent {
   updateGrid() {
     this.boundaryWidth = this.gridX * this.gridCellSize;
     this.boundaryHeight = this.gridY * this.gridCellSize;
-    this.gridCells = Array(this.gridX * this.gridY);
+    // this.gridCells = Array(this.gridX * this.gridY);
+    this.gridCells = Array(this.gridX * this.gridY).fill(null).map(() => ({ isClicked: false }));
   }
 
   updateGridSize(x: number, y: number) {
@@ -107,5 +114,24 @@ export class HomeComponent {
       this.objectService.addObject(name, width, height, image, mustTouchWall);
       this.objectForm.reset({ width: 1, height: 1, mustTouchWall: false });
     }
+  }
+
+  onMouseDown(index: number): void {
+    this.isMouseDown = true;
+    this.toggleCellState(index);
+  }
+
+  onMouseUp(): void {
+    this.isMouseDown = false;
+  }
+
+  onMouseOver(index: number): void {
+    if (this.isMouseDown) {
+      this.toggleCellState(index);
+    }
+  }
+
+  toggleCellState(index: number): void {
+    this.gridCells[index].isClicked = !this.gridCells[index].isClicked;
   }
 }

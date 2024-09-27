@@ -79,7 +79,13 @@
 
   <div class="example-boundary" [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight">
     <div class="grid-background" [style.gridTemplateColumns]="'repeat(' + gridX + ', ' + gridCellSize + 'px)'" [style.gridTemplateRows]="'repeat(' + gridY + ', ' + gridCellSize + 'px)'">
-      <div *ngFor="let cell of gridCells" class="grid-cell"></div>
+      <div *ngFor="let cell of gridCells; let i = index" 
+            class="grid-cell" 
+            [ngClass]="{'clicked': cell.isClicked}" 
+            (mousedown)="onMouseDown(i)"
+            (mouseup)="onMouseUp()"
+            (mouseover)="onMouseOver(i)">
+      </div>
       <div class="example-box"
            cdkDragBoundary=".example-boundary"
            cdkDrag

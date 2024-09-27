@@ -26,7 +26,13 @@
 .grid-cell {
   width: 30px;
   height: 30px;
-  border: 1px dashed #aab2b8;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  transition: background-color 0.3s;
+
+  &.clicked {
+    background-color: rgba(0, 68, 255, 0.349);  // Change color when clicked
+  }
 }
 
 .example-box {
@@ -42,7 +48,7 @@
   border-radius: 6px;
   z-index: 1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  padding: 12px;
+  // padding: 12px;
   transform-origin: center center; 
 }
 

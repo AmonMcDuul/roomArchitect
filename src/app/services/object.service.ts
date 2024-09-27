@@ -14,15 +14,15 @@ export class ObjectService {
 
   initializeDefaultObjects(): void {
     this.predefinedObjects = [
-      this.createObject("toilet", 40, 60, "https://i.postimg.cc/vT8jQKy9/toiler-01.png", true),
-      this.createObject("Bad", 80, 170, "https://i.postimg.cc/Xv3YjTk1/Bad-01.png", false),
-      this.createObject("Wasbak", 60, 40, "https://i.postimg.cc/sf0KQx9b/wasbak-01.png", true),
-      this.createObject("Douche", 90, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true),
-      this.createObject("InloopDouche", 120, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true),
+      this.createObject("toilet", 40, 60, "https://i.postimg.cc/vT8jQKy9/toiler-01.png", true, 10, 20),
+      this.createObject("Bad", 80, 170, "https://i.postimg.cc/Xv3YjTk1/Bad-01.png", false, 50, 30),
+      this.createObject("Wasbak", 60, 40, "https://i.postimg.cc/sf0KQx9b/wasbak-01.png", true, 100, 60),
+      this.createObject("Douche", 90, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true, 150, 100),
+      this.createObject("InloopDouche", 120, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true, 200, 150),
     ];
   }
 
-  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean): DrawableObject {
+  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0): DrawableObject {
     return {
       name,
       width: width * 3,
@@ -31,11 +31,13 @@ export class ObjectService {
       mustTouchWall,
       rotated: false,
       rotation: 0,
+      x, 
+      y 
     };
   }
 
-  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean): DrawableObject {
-    const newObject = this.createObject(name, width, height, image, mustTouchWall);
+  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0): DrawableObject {
+    const newObject = this.createObject(name, width, height, image, mustTouchWall, x, y);
     this.objects.push(newObject);
     return newObject;
   }
