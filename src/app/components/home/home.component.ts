@@ -158,7 +158,7 @@ export class HomeComponent {
           obj.x + obj.width > cell.x &&
           obj.y < cell.y + cell.height &&
           obj.y + obj.height > cell.y) {
-        return true; // Collision detected
+        return true;
       }
     }
     return false;
@@ -183,7 +183,7 @@ export class HomeComponent {
         }
     }
   }
-  
+
   onDrag(event: any, item: DrawableObject) {
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;

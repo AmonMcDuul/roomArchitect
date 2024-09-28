@@ -31,13 +31,13 @@
   transition: background-color 0.3s;
 
   &.clicked {
-    background-color: rgba(0, 68, 255, 0.349);  // Change color when clicked
+    background-color: rgba(0, 68, 255, 0.349); 
   }
 }
 
 .example-box {
   position: absolute;
-  border: solid 2px #90a4ae;
+  border: solid 1px #000000;
   color: rgba(0, 0, 0, 0.87);
   cursor: move;
   display: inline-flex;
@@ -61,6 +61,7 @@
   object-fit: fill; 
   border-radius: 6px;
   transform-origin: center center; 
+  opacity: 0.9;
 }
 
 h3 {
