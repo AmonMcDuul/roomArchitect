@@ -91,7 +91,7 @@
            cdkDrag
            *ngFor="let item of items"
            [ngStyle]="{
-            'background-color': checkCollisionWithGridCells(item) ? 'red' : (item.isColliding ? 'red' : 'lightgreen')            
+            'background-color': checkCollisionWithGridCells(item) ? 'red' : (item.isColliding ? 'red' : 'white')            
             }"
            [style.width.px]="item.width"
            [style.height.px]="item.height"
