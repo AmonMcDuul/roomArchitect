@@ -113,7 +113,7 @@ export class HomeComponent {
   }
 
   removeObject(object: DrawableObject): void {
-    this.objectService.removeObject(object.name);
+    this.objectService.removeObject(object.name, object.x);
     this.items = this.objectService.getObjects();
   }
 

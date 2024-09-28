@@ -51,7 +51,8 @@ export class ObjectService {
     return this.predefinedObjects;
   }
 
-  removeObject(name: string): void {
-    this.objects = this.objects.filter((obj) => obj.name !== name);
+  removeObject(name: string, x: number): void {
+    // this.objects = this.objects.filter((obj) => obj.name !== name && obj.x !== x);
+    this.objects = this.objects.filter((obj) => obj.name !== name || obj.x !== x);
   }
 }

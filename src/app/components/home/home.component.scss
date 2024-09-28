@@ -3,7 +3,6 @@
   flex-direction: row;
   width: 100%;
   height: 100%;
-  background-color: #f7f9fc;
 }
 
 .example-boundary {
@@ -15,25 +14,51 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
+// .grid-background {
+//   position: relative;
+//   display: grid;
+//   z-index: 0;
+//   background: linear-gradient(45deg, #ffffff 25%, #e3e8ee 25%, #e3e8ee 50%, #ffffff 50%, #ffffff 75%, #e3e8ee 75%, #e3e8ee 100%);
+//   background-size: 40px 40px;
+// }
+
+// .grid-cell {
+//   width: 30px;
+//   height: 30px;
+//   border: 1px solid #ccc;
+//   background-color: transparent;
+//   transition: background-color 0.3s;
+
+//   &.clicked {
+//     background-color: rgba(89, 0, 255, 0.349); 
+//   }
+// }
+
 .grid-background {
   position: relative;
   display: grid;
   z-index: 0;
-  background: linear-gradient(45deg, #ffffff 25%, #e3e8ee 25%, #e3e8ee 50%, #ffffff 50%, #ffffff 75%, #e3e8ee 75%, #e3e8ee 100%);
-  background-size: 40px 40px;
+  background: repeating-linear-gradient(
+    45deg,
+    #f0f0f0,
+    #f0f0f0 30%,
+    #e1e4e3 30%,
+    #e1e4e3 50%
+  );
+  background-size: 50px 50px;
 }
 
 .grid-cell {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   background-color: transparent;
   transition: background-color 0.3s;
+  background-image: radial-gradient(circle at center, rgba(235, 216, 171, 0.2), transparent);
 
   &.clicked {
-    background-color: rgba(0, 68, 255, 0.349); 
+    background-color: rgba(0, 128, 255, 0.3);
   }
 }
+
 
 .example-box {
   position: absolute;
