@@ -9,4 +9,5 @@ export interface DrawableObject {
     mustTouchWall: boolean;
     rotated: boolean;
     rotation: number;
+    isColliding: boolean;
   }

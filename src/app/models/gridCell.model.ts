@@ -1,3 +1,7 @@
 export interface GridCell {
-    isClicked: boolean;
-  }
+  isClicked: boolean;
+  x: number;
+  y: number; 
+  width: number; 
+  height: number;
+}

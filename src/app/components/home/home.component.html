@@ -90,9 +90,12 @@
            cdkDragBoundary=".example-boundary"
            cdkDrag
            *ngFor="let item of items"
-           [ngStyle]="{'background-color': item == selectedItem ? 'aqua' : 'white'}"
+           [ngStyle]="{
+            'background-color': checkCollisionWithGridCells(item) ? 'red' : (item.isColliding ? 'red' : 'lightgreen')            
+            }"
            [style.width.px]="item.width"
            [style.height.px]="item.height"
+           (cdkDragMoved)="onDrag($event, item)"
            (click)="selectItem(item)">
       <button class="rotate-button" (click)="rotateObject()">&#10227;</button>
       <img

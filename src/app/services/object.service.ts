@@ -32,7 +32,8 @@ export class ObjectService {
       rotated: false,
       rotation: 0,
       x, 
-      y 
+      y,
+      isColliding: false
     };
   }
 
