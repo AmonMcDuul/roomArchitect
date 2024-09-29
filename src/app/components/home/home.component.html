@@ -11,8 +11,7 @@
           <label for="gridY">Grid Height (Y):</label>
           <input type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
         </div>
-      </div>
-    <form [formGroup]="objectForm" class="object-form">
+    <form [formGroup]="objectForm">
       <h3>Create object</h3>
       <div class="form-group">
         <label for="width">Name:</label>
@@ -42,7 +41,7 @@
       </div> -->
       <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add Object</button>
     </form>
-
+  </div>
     <div class="predefined-objects">
       <h3>Select Predefined Object</h3>
         <button class="predefined-objects-button"
@@ -106,7 +105,7 @@
         </li>
       </ul>
     </div>
-    <div *ngIf="selectedItem" class="resize-inputs" class="object-form">
+    <div *ngIf="selectedItem" class="resize-inputs" class="predefined-objects">
       <h3>Resize {{ selectedItem.name }}</h3>
       <div class="form-group">
         <label>

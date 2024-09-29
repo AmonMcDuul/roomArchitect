@@ -18,7 +18,10 @@ export class ObjectService {
       this.createObject("Bad", 80, 170, "https://i.postimg.cc/Xv3YjTk1/Bad-01.png", false),
       this.createObject("Wasbak", 60, 40, "https://i.postimg.cc/sf0KQx9b/wasbak-01.png", true),
       this.createObject("Douche", 90, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true),
-      this.createObject("InloopDouche", 120, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true),
+      this.createObject("realtoilet", 40, 60, 'https://i.postimg.cc/gjSjF4Dk/real-toilet.png', true),
+      this.createObject("realBad", 80, 170, "https://i.postimg.cc/V6wdjJv1/real-bath.png", false),
+      this.createObject("realWasbak", 40, 100, "https://i.postimg.cc/pVqpFXHb/real-wasbak.png", true),
+      this.createObject("realDouche", 90, 90, "https://i.postimg.cc/ZnKnMX6M/real-douche.png", true),
     ];
   }
 
