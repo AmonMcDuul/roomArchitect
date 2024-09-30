@@ -31,6 +31,9 @@ export class HomeComponent {
   items: DrawableObject[] = [];
   predefinedItems: DrawableObject[] = [];
 
+  savedConfigurations: any[] = [];
+  newSaveName: string = "";
+
   objectForm: FormGroup;
   isMouseDown = false;
 
@@ -49,8 +52,9 @@ export class HomeComponent {
     this.objectService.initializeDefaultObjects();
     this.items = this.objectService.getObjects();
     this.predefinedItems = this.objectService.getPredefinedObjects();
+    this.loadSavedConfigurations();
   }
-
+  
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
     if (selectedPredefinedItem) {
       const x = 0; 
@@ -185,9 +189,69 @@ export class HomeComponent {
   }
 
   onDrag(event: any, item: DrawableObject) {
+    if(item.firstLoadConfiguration){
+      item.firstLoadConfiguration = false;
+    }
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;
     item.y = y;
     this.detectCollisions();
+  }
+
+  saveConfiguration(configName: string): void {
+    const configuration = {
+      name: configName, 
+      gridX: this.gridX,
+      gridY: this.gridY,
+      items: this.items.map(item => ({
+        name: item.name,
+        width: item.width,
+        height: item.height,
+        x: item.x,
+        y: item.y,
+        image: item.image,
+        rotation: item.rotation,
+        mustTouchWall: item.mustTouchWall,
+      }))
+    };
+    const savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
+    savedConfigs.push(configuration);
+    localStorage.setItem('savedConfigurations', JSON.stringify(savedConfigs));
+  }
+  
+  loadConfiguration(configName: string): void {
+    const savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
+    const configToLoad = savedConfigs.find((config: { name: string; }) => config.name === configName);
+  
+    if (configToLoad) {
+      this.gridX = configToLoad.gridX;
+      this.gridY = configToLoad.gridY;
+  
+      this.items = configToLoad.items.map((item: { name: string; width: number; height: number; x: number; y: number; image: string; rotation: number; mustTouchWall: boolean }) => ({
+        name: item.name,
+        width: item.width,
+        height: item.height,
+        x: item.x, 
+        y: item.y, 
+        image: item.image,
+        rotation: item.rotation,
+        mustTouchWall: item.mustTouchWall,
+        firstLoadConfiguration: true
+      }));
+  
+      this.updateGrid();
+    }
+  }
+  
+  
+  deleteConfiguration(configName: string): void {
+    let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
+    savedConfigs = savedConfigs.filter((config: { name: string; }) => config.name !== configName);
+    localStorage.setItem('savedConfigurations', JSON.stringify(savedConfigs));
+    this.loadSavedConfigurations();
+  }
+  
+  loadSavedConfigurations(): void {
+    this.savedConfigurations = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
   }
 }

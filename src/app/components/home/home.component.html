@@ -6,7 +6,6 @@
           <label for="gridX">Grid Width (X):</label>
           <input type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
         </div>
-      
         <div class="form-group">
           <label for="gridY">Grid Height (Y):</label>
           <input type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
@@ -65,30 +64,32 @@
          <div class="example-box"
               cdkDragBoundary=".example-boundary"
               cdkDrag
-              *ngFor="let item of items"
+              *ngFor="let item of items" 
+              [id]="item.name"
               [ngStyle]="{
+               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : ''),
                'background-color': checkCollisionWithGridCells(item) ? 'rgba(134, 22, 22, 0.6)' : (item.isColliding ? 'rgba(134, 22, 22, 0.6)' : 'rgba(255, 255, 255, 0.85)')            
                }"
               [style.width.px]="item.width"
               [style.height.px]="item.height"
               (cdkDragMoved)="onDrag($event, item)"
               (mousedown)="selectItem(item)">
-         <button class="rotate-button" (click)="rotateObject()">&#10227;</button>
-         <img
-           [src]="item.image"
-           alt="{{ item.name }}"
-           class="object-image"
-           [ngStyle]="{
-             'transform': 'rotate(' + item.rotation + 'deg)',
-             'width.px': item.rotation === 90 || item.rotation === 270 ? item.height : item.width,
-             'height.px': item.rotation === 90 || item.rotation === 270 ? item.width : item.height
-           }">
+            <button class="rotate-button" (click)="rotateObject()">&#10227;</button>
+            <img
+              [src]="item.image"
+              alt="{{ item.name }}"
+              class="object-image"
+              [ngStyle]="{
+                'transform': 'rotate(' + item.rotation + 'deg)',
+                'width.px': item.rotation === 90 || item.rotation === 270 ? item.height : item.width,
+                'height.px': item.rotation === 90 || item.rotation === 270 ? item.width : item.height
+              }">
            {{ item.name }}
          </div>
        </div>
    
      </div>
-<div>
+  <div>
 
     <div class="sidebar">
       <h3>Available Objects</h3>
@@ -120,6 +121,18 @@
         </label>
       </div>
       <button (click)="rotateObject()">Rotate</button>
+    </div>
+    <div class="predefined-objects">
+      <h3>Configurations</h3>
+      <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
+      <button (click)="saveConfiguration(newSaveName)">Save Configuration</button>
+      <ul>
+        <li *ngFor="let config of savedConfigurations">
+          {{ config.name }}
+          <button (click)="loadConfiguration(config.name)">Load</button>
+          <button (click)="deleteConfiguration(config.name)">Delete</button>
+        </li>
+      </ul>
     </div>
 
   </div>

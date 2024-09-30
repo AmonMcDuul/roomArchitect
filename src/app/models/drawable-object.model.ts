@@ -10,4 +10,5 @@ export interface DrawableObject {
     rotated: boolean;
     rotation: number;
     isColliding: boolean;
+    firstLoadConfiguration: boolean;
   }
