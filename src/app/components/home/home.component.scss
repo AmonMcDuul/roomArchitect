@@ -1,3 +1,12 @@
+.head-container {
+  height: 80px;
+  color: rgb(255, 255, 255);
+  background-color: #546e7a; 
+  padding-top: 10px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
 .main-container {
   display: flex;
   flex-direction: row;
@@ -91,12 +100,12 @@ h3 {
 }
 
 .sidebar {
-  width: 280px;
-  padding: 20px;
-  background-color: #ffffff; 
-  border-right: 2px solid #b0bec5;
-  overflow-y: auto;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  // width: 280px;
+  // padding: 20px;
+  // background-color: #ffffff; 
+  // border-right: 2px solid #b0bec5;
+  // overflow-y: auto;
+  // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -125,7 +134,27 @@ h3 {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.sidebar button {
+.savebutton {
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #42a5f5; 
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.savebutton:disabled {
+  background-color: #90a4ae;
+}
+
+.savebutton:hover {
+  background-color: #1e88e5;
+}
+
+.deletebutton {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -137,7 +166,7 @@ h3 {
   cursor: pointer;
 }
 
-.sidebar button:hover {
+.deletebutton:hover {
   background-color: #e53935;
 }
 
@@ -193,7 +222,6 @@ button:hover {
 .predefined-objects{
   width: 280px;
   padding: 20px;
-  background-color: #ffffff; 
   border-right: 2px solid #b0bec5;
   overflow-y: auto;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -203,6 +231,23 @@ button:hover {
   margin: 2px;
   display: flex;
   width: 100%;
+}
+
+.collapsible-header {
+  cursor: pointer;
+  text-decoration: underline;
+  display: flex;
+  justify-content: start;
+  align-items: center; 
+}
+
+.collapsible-header:hover {
+  color: #0056b3; 
+}
+
+.arrow {
+  margin-left: 10px; 
+  font-size: 16px; 
 }
 
 @media screen and (max-width: 768px) {

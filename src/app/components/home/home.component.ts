@@ -34,6 +34,14 @@ export class HomeComponent {
   savedConfigurations: any[] = [];
   newSaveName: string = "";
 
+  showGridSize: boolean = false;
+  showCreateObject: boolean = false;
+  showPredefinedObjects: boolean = false;
+  showAvailableObjects: boolean = false;
+  showResize: boolean = false;
+  showConfigurations: boolean = false;
+
+
   objectForm: FormGroup;
   isMouseDown = false;
 
@@ -53,6 +61,30 @@ export class HomeComponent {
     this.items = this.objectService.getObjects();
     this.predefinedItems = this.objectService.getPredefinedObjects();
     this.loadSavedConfigurations();
+  }
+
+  toggleGridSize() {
+    this.showGridSize = !this.showGridSize;
+  }
+
+  toggleCreateObject() {
+    this.showCreateObject = !this.showCreateObject;
+  }
+
+  togglePredefinedObjects() {
+    this.showPredefinedObjects = !this.showPredefinedObjects;
+  }
+
+  toggleAvailableObjects() {
+    this.showAvailableObjects = !this.showAvailableObjects;
+  }
+
+  toggleResize() {
+    this.showResize = !this.showResize;
+  }
+
+  toggleConfigurations() {
+    this.showConfigurations = !this.showConfigurations;
   }
   
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
@@ -189,9 +221,7 @@ export class HomeComponent {
   }
 
   onDrag(event: any, item: DrawableObject) {
-    if(item.firstLoadConfiguration){
-      item.firstLoadConfiguration = false;
-    }
+    item.firstLoadConfiguration = false;
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;
     item.y = y;

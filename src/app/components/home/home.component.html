@@ -1,7 +1,28 @@
+<div class="head-container">
+  <h1>Bathroom-a-sketch</h1>
+</div>
 <div class="main-container">
      <div>
       <div class="predefined-objects">
-        <h3>Grid size</h3>
+        <div class="sidebar">
+          <h3 (click)="toggleConfigurations()" class="collapsible-header">Configurations
+            <span class="arrow">{{ showConfigurations ? '▲' : '▼' }}</span>
+          </h3>
+          <div *ngIf="showConfigurations">
+          <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
+          <ul>
+            <button class="savebutton" (click)="saveConfiguration(newSaveName)">Save</button>
+            <li *ngFor="let config of savedConfigurations" (click)="loadConfiguration(config.name)">
+              {{ config.name }}
+              <button class="deletebutton" (click)="deleteConfiguration(config.name)">X</button>
+            </li>
+          </ul>
+          </div>
+        </div>
+        <h3 (click)="toggleGridSize()" class="collapsible-header">Grid Size
+          <span class="arrow">{{ showGridSize ? '▲' : '▼' }}</span>
+        </h3>
+        <div *ngIf="showGridSize">
         <div class="form-group">
           <label for="gridX">Grid Width (X):</label>
           <input type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
@@ -10,8 +31,12 @@
           <label for="gridY">Grid Height (Y):</label>
           <input type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
         </div>
+        </div>
     <form [formGroup]="objectForm">
-      <h3>Create object</h3>
+      <h3 (click)="toggleCreateObject()" class="collapsible-header">Create object
+        <span class="arrow">{{ showGridSize ? '▲' : '▼' }}</span>
+      </h3>
+      <div *ngIf="showCreateObject">
       <div class="form-group">
         <label for="width">Name:</label>
         <input type="string" id="name" formControlName="name" />
@@ -39,18 +64,67 @@
         </label>
       </div> -->
       <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add Object</button>
+      </div>
     </form>
-  </div>
-    <div class="predefined-objects">
-      <h3>Select Predefined Object</h3>
-        <button class="predefined-objects-button"
-          *ngFor="let object of predefinedItems"
-          [class.selected]="selectedItem?.name === object.name"
-          (click)="addPredefinedItem(object)"
+    <div class="sidebar">
+      <h3 (click)="togglePredefinedObjects()" class="collapsible-header">Predefined objects
+        <span class="arrow">{{ showPredefinedObjects ? '▲' : '▼' }}</span>
+      </h3>
+      <div *ngIf="showPredefinedObjects">
+        <ul>
+          <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
+            {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Available Objects
+        <span class="arrow">{{ showAvailableObjects ? '▲' : '▼' }}</span>
+      </h3>
+      <div *ngIf="showAvailableObjects">
+
+      <ul>
+        <li
+          *ngFor="let object of items"
+          [class.selected]="selectedItem?.name === object.name && selectedItem?.x === object.x"
+          (click)="selectItem(object)"
         >
           {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
-      </button>
+          <button class="deletebutton" (click)="removeObject(object); $event.stopPropagation();">
+            X
+          </button>
+        </li>
+      </ul>
+      </div>
     </div>
+
+    <div *ngIf="selectedItem" class="resize-inputs">
+      <h3 (click)="toggleResize()" class="collapsible-header">Resize {{ selectedItem.name }}
+        <span class="arrow">{{ showResize ? '▲' : '▼' }}</span>
+      </h3>
+      <div *ngIf="showResize">
+      <div class="form-group">
+        <label>
+          Width (cm):
+          <input type="number" [(ngModel)]="inputWidthCm" (input)="updateSizeInCm()" />
+        </label>
+      </div>
+      <div class="form-group">
+        <label>
+          Height (cm):
+          <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
+          <button (click)="rotateObject()">Rotate</button>
+        </label>
+      </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
      </div>
      <div class="example-boundary" [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight">
        <div class="grid-background" [style.gridTemplateColumns]="'repeat(' + gridX + ', ' + gridCellSize + 'px)'" [style.gridTemplateRows]="'repeat(' + gridY + ', ' + gridCellSize + 'px)'">
@@ -67,7 +141,7 @@
               *ngFor="let item of items" 
               [id]="item.name"
               [ngStyle]="{
-               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : ''),
+               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : 'translate3d(' + 0 + 'px, ' + 0 + 'px, 0)' ),
                'background-color': checkCollisionWithGridCells(item) ? 'rgba(134, 22, 22, 0.6)' : (item.isColliding ? 'rgba(134, 22, 22, 0.6)' : 'rgba(255, 255, 255, 0.85)')            
                }"
               [style.width.px]="item.width"
@@ -89,53 +163,7 @@
        </div>
    
      </div>
-  <div>
-
-    <div class="sidebar">
-      <h3>Available Objects</h3>
-      <ul>
-        <li
-          *ngFor="let object of items"
-          [class.selected]="selectedItem?.name === object.name && selectedItem?.x === object.x"
-          (click)="selectItem(object)"
-        >
-          {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
-          <button (click)="removeObject(object); $event.stopPropagation();">
-            X
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="selectedItem" class="resize-inputs" class="predefined-objects">
-      <h3>Resize {{ selectedItem.name }}</h3>
-      <div class="form-group">
-        <label>
-          Width (cm):
-          <input type="number" [(ngModel)]="inputWidthCm" (input)="updateSizeInCm()" />
-        </label>
-      </div>
-      <div class="form-group">
-        <label>
-          Height (cm):
-          <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
-        </label>
-      </div>
-      <button (click)="rotateObject()">Rotate</button>
-    </div>
-    <div class="predefined-objects">
-      <h3>Configurations</h3>
-      <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
-      <button (click)="saveConfiguration(newSaveName)">Save Configuration</button>
-      <ul>
-        <li *ngFor="let config of savedConfigurations">
-          {{ config.name }}
-          <button (click)="loadConfiguration(config.name)">Load</button>
-          <button (click)="deleteConfiguration(config.name)">Delete</button>
-        </li>
-      </ul>
-    </div>
 
   </div>
 
-</div>
 
