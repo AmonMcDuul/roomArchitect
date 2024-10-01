@@ -25,7 +25,7 @@ export class ObjectService {
     ];
   }
 
-  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0): DrawableObject {
+  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0, firstLoad: boolean = false): DrawableObject {
     return {
       name,
       width: width * 3,
@@ -37,12 +37,12 @@ export class ObjectService {
       x, 
       y,
       isColliding: false,
-      firstLoadConfiguration: false,
+      firstLoadConfiguration: firstLoad,
     };
   }
 
-  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0): DrawableObject {
-    const newObject = this.createObject(name, width, height, image, mustTouchWall, x, y);
+  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0, firstLoad: boolean = false): DrawableObject {
+    const newObject = this.createObject(name, width, height, image, mustTouchWall, x, y, firstLoad);
     this.objects.push(newObject);
     return newObject;
   }

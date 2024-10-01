@@ -41,6 +41,7 @@ export class HomeComponent {
   showResize: boolean = false;
   showConfigurations: boolean = false;
 
+  isLoadedHack: boolean = false;
 
   objectForm: FormGroup;
   isMouseDown = false;
@@ -225,7 +226,9 @@ export class HomeComponent {
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;
     item.y = y;
-    this.detectCollisions();
+    if(!this.isLoadedHack){
+      this.detectCollisions();
+    }
   }
 
   saveConfiguration(configName: string): void {
@@ -268,8 +271,13 @@ export class HomeComponent {
         mustTouchWall: item.mustTouchWall,
         firstLoadConfiguration: true
       }));
-  
+      
+      this.items.forEach(item => {
+        this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.mustTouchWall, item.x, item.y, true);
+      });
+      this.items = this.objectService.getObjects();
       this.updateGrid();
+      this.isLoadedHack = true;
     }
   }
   

@@ -141,7 +141,7 @@
               *ngFor="let item of items" 
               [id]="item.name"
               [ngStyle]="{
-               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : 'translate3d(' + 0 + 'px, ' + 0 + 'px, 0)' ),
+               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : '(' + 0 + 'px, ' + 0 + 'px, 0)' ),
                'background-color': checkCollisionWithGridCells(item) ? 'rgba(134, 22, 22, 0.6)' : (item.isColliding ? 'rgba(134, 22, 22, 0.6)' : 'rgba(255, 255, 255, 0.85)')            
                }"
               [style.width.px]="item.width"
