@@ -4,7 +4,7 @@
   background-color: #546e7a; 
   padding-top: 10px;
   padding-left: 20px;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #455a64;
 }
 
 .main-container {
@@ -15,34 +15,14 @@
 }
 
 .example-boundary {
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
   position: relative;
   border: solid #b0bec5 2px;
   border-radius: 8px;
-  overflow: hidden;
   background-color: #e0e0e0; 
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
 }
-
-// .grid-background {
-//   position: relative;
-//   display: grid;
-//   z-index: 0;
-//   background: linear-gradient(45deg, #ffffff 25%, #e3e8ee 25%, #e3e8ee 50%, #ffffff 50%, #ffffff 75%, #e3e8ee 75%, #e3e8ee 100%);
-//   background-size: 40px 40px;
-// }
-
-// .grid-cell {
-//   width: 30px;
-//   height: 30px;
-//   border: 1px solid #ccc;
-//   background-color: transparent;
-//   transition: background-color 0.3s;
-
-//   &.clicked {
-//     background-color: rgba(89, 0, 255, 0.349); 
-//   }
-// }
 
 .grid-background {
   position: relative;
@@ -101,12 +81,7 @@ h3 {
 }
 
 .sidebar {
-  // width: 280px;
-  // padding: 20px;
-  // background-color: #ffffff; 
-  // border-right: 2px solid #b0bec5;
-  // overflow-y: auto;
-  // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 
@@ -138,7 +113,6 @@ h3 {
 .savebutton {
   padding: 10px 14px;
   margin-bottom: 10px;
-  width: 100%;
   background-color: #42a5f5; 
   border: none;
   color: #fff;
@@ -221,8 +195,8 @@ button:hover {
 }
 
 .predefined-objects{
-  padding: 10px;
-  // background-color: #dae6ed; 
+  height: vh;
+  background-color: #546e7a;
 }
 
 .predefined-objects-button {
@@ -239,11 +213,20 @@ button:hover {
   background-color: #546e7a;
   color: white;
   padding: 20px;
+  margin: 0px;
+  border: 1px solid #455a64;
+
 }
+
 
 .collapsible-header:hover {
   background-color: #455a64;
+}
 
+.inside-menu-item {
+  border: 1px solid #455a64;
+  padding: 10px;
+  background-color: #eceff2; 
 }
 
 .arrow {
@@ -252,11 +235,11 @@ button:hover {
 }
 
 @media screen and (max-width: 768px) {
-  .main-container {
-    flex-direction: column;
-  }
+  // .main-container {
+  //   flex-direction: column;
+  // }
 
   .sidebar, .predefined-objects {
-    width: 100%;
+    // width: 100%;
   }
 }
