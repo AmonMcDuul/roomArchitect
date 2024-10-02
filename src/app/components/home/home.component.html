@@ -21,7 +21,7 @@
           </ul>
           </div>
         </div>
-        <h3 (click)="toggleGridSize()" class="collapsible-header">Grid Size
+        <h3 (click)="toggleGridSize()" class="collapsible-header">Grid size
           <span class="arrow">{{ showGridSize ? '▲' : '▼' }}</span>
         </h3>
         <div *ngIf="showGridSize" class="inside-menu-item">
@@ -55,7 +55,7 @@
       </div>
     
       <div class="form-group">
-        <label for="image">image:</label>
+        <label for="image">Image:</label>
         <input type="string" id="image" formControlName="image" />
       </div>
 
@@ -65,7 +65,7 @@
           Must Touch Wall
         </label>
       </div> -->
-      <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add Object</button>
+      <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add object</button>
       </div>
     </form>
     <div class="sidebar">
@@ -82,7 +82,7 @@
     </div>
 
     <div class="sidebar">
-      <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Available Objects
+      <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Available objects
         <span class="arrow">{{ showAvailableObjects ? '▲' : '▼' }}</span>
       </h3>
       <div *ngIf="showAvailableObjects" class="inside-menu-item">
