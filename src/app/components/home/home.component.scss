@@ -15,6 +15,7 @@
 }
 
 .example-boundary {
+  margin-left: 20px;
   position: relative;
   border: solid #b0bec5 2px;
   border-radius: 8px;
@@ -220,11 +221,8 @@ button:hover {
 }
 
 .predefined-objects{
-  width: 280px;
-  padding: 20px;
-  border-right: 2px solid #b0bec5;
-  overflow-y: auto;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  // background-color: #dae6ed; 
 }
 
 .predefined-objects-button {
@@ -235,14 +233,17 @@ button:hover {
 
 .collapsible-header {
   cursor: pointer;
-  text-decoration: underline;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center; 
+  background-color: #546e7a;
+  color: white;
+  padding: 20px;
 }
 
 .collapsible-header:hover {
-  color: #0056b3; 
+  background-color: #455a64;
+
 }
 
 .arrow {
