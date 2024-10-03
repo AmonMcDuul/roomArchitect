@@ -101,6 +101,7 @@
   z-index: 1;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transform-origin: center center; 
+  background-color: transparent;
 }
 
 .object-image {
@@ -111,6 +112,7 @@
   border-radius: 6px;
   transform-origin: center center; 
   opacity: 0.9;
+  // background-color: #e7e9eb;
 }
 
 h3 {
@@ -271,6 +273,21 @@ button:hover {
 
 .delete-object-button:hover {
   background-color: #e53935;
+}
+
+.unlock-object-button {
+  position: absolute;
+  padding: 6px 10px;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  font-size: 16px;
+  color: black;
+  z-index: 5;
+}
+
+.unlock-object-button:hover {
+  background-color: #1e88e5;
 }
 
 .menu-items{

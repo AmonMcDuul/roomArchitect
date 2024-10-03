@@ -7,10 +7,8 @@ export interface DrawableObject {
     x: number;
     y: number;
     mustTouchWall: boolean;
-    rotated: boolean;
     rotation: number;
     isColliding: boolean;
     firstLoadConfiguration: boolean;
-    boundingBoxWidth?: number; 
-    boundingBoxHeight?: number; 
+    unlocked: boolean;
   }

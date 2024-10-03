@@ -197,6 +197,17 @@ export class HomeComponent {
     }
   }
 
+  unlockObject() {
+    if (this.selectedItem) {
+      this.selectedItem.unlocked = !this.selectedItem.unlocked;
+      if(!this.selectedItem){
+        this.removeObject(this.selectedItem);
+        this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, false)
+        this.items = this.objectService.getObjects();
+      }
+    }
+  }
+
   removeObject(object: DrawableObject): void {
     this.objectService.removeObject(object.name, object.x);
     this.items = this.objectService.getObjects();
@@ -293,6 +304,7 @@ export class HomeComponent {
         image: item.image,
         rotation: item.rotation,
         mustTouchWall: item.mustTouchWall,
+        unlocked: item.unlocked,
       }))
     };
     const savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
@@ -308,7 +320,7 @@ export class HomeComponent {
       this.gridX = configToLoad.gridX;
       this.gridY = configToLoad.gridY;
   
-      this.items = configToLoad.items.map((item: { name: string; width: number; height: number; x: number; y: number; image: string; rotation: number; mustTouchWall: boolean }) => ({
+      this.items = configToLoad.items.map((item: { name: string; width: number; height: number; x: number; y: number; image: string; rotation: number; mustTouchWall: boolean, unlocked: boolean }) => ({
         name: item.name,
         width: item.width,
         height: item.height,
@@ -317,11 +329,12 @@ export class HomeComponent {
         image: item.image,
         rotation: item.rotation,
         mustTouchWall: item.mustTouchWall,
-        firstLoadConfiguration: true
+        firstLoadConfiguration: true,
+        unlocked: item.unlocked,
       }));
       
       this.items.forEach(item => {
-        this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.mustTouchWall, item.x, item.y, true);
+        this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.mustTouchWall, item.rotation, item.x, item.y, true, item.unlocked);
       });
       this.items = this.objectService.getObjects();
       this.updateGrid();

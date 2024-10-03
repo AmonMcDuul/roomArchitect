@@ -147,7 +147,7 @@
           <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
         </div>
 
-        <div class="form-group">
+        <div *ngIf="selectedItem.unlocked" class="form-group">
           <label for="rotation">Rotation (degrees): {{ selectedItem.rotation }}°</label>
           <input type="range" id="rotation" min="0" max="360" [(ngModel)]="selectedItem.rotation" (input)="rotateObjectFreely()" />
         </div>
@@ -155,7 +155,6 @@
     </div>
 
   </div>
-
   <div class="grid-container">
     <div class="horizontal-ruler" [style.width.px]="gridX * gridCellSize">
       <div *ngFor="let x of [].constructor(gridX); let i = index">
@@ -187,15 +186,15 @@
                cdkDrag
                *ngFor="let item of items" 
                [ngStyle]="{
-               'transform': (item.firstLoadConfiguration ? 'translate3d(' + item.x + 'px, ' + item.y + 'px, 0)' : '(' + 0 + 'px, ' + 0 + 'px, 0)' ),
-                 'background-color': checkCollisionWithGridCells(item) ? 'rgba(134, 22, 22, 0.6)' : (item.isColliding ? 'rgba(134, 22, 22, 0.6)' : 'rgba(255, 255, 255, 0.85)')
+               'transform': (item.firstLoadConfiguration ? 'translate(' + item.x + 'px, ' + item.y + 'px)' : '(' + item.x + 'px, ' + item.y + 'px)' ),
                }"
-               [style.width.px]="item.width"
-               [style.height.px]="item.height"
+              [style.width.px]="item?.unlocked ? (item.width - item.width / 2) : item.width"
+              [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
                (cdkDragMoved)="onDrag($event, item)"
                (mousedown)="selectItem(item)">
-            <button class="rotate-button" (click)="rotateObject()">&#10227;</button>
-            <button class="delete-object-button" (click)="removeObject(selectedItem)">x</button>
+            <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
+            <button class="delete-object-button" (click)="removeObject(item)">x</button>
+            <button class="unlock-object-button" (click)="unlockObject()">&#9839;</button>
             <img [src]="item.image" alt="{{ item.name }}" class="object-image"
                  [ngStyle]="{
                    'transform': 'rotate(' + item.rotation + 'deg)',

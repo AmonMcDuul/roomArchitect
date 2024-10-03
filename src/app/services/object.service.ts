@@ -14,35 +14,35 @@ export class ObjectService {
 
   initializeDefaultObjects(): void {
     this.predefinedObjects = [
-      this.createObject("toilet", 40, 60, "https://i.postimg.cc/vT8jQKy9/toiler-01.png", true),
-      this.createObject("Bad", 80, 170, "https://i.postimg.cc/Xv3YjTk1/Bad-01.png", false),
-      this.createObject("Wasbak", 60, 40, "https://i.postimg.cc/sf0KQx9b/wasbak-01.png", true),
-      this.createObject("Douche", 90, 90, "https://i.postimg.cc/6p6QkWF5/douche-01.png", true),
-      this.createObject("realtoilet", 40, 60, 'https://i.postimg.cc/gjSjF4Dk/real-toilet.png', true),
-      this.createObject("realBad", 80, 170, "https://i.postimg.cc/V6wdjJv1/real-bath.png", false),
-      this.createObject("realWasbak", 40, 100, "https://i.postimg.cc/pVqpFXHb/real-wasbak.png", true),
-      this.createObject("realDouche", 90, 90, "https://i.postimg.cc/ZnKnMX6M/real-douche.png", true),
+      this.createObject("toilet", 40, 60, "/assets/images/toiler_01.png", true),
+      this.createObject("Bad", 80, 170, "/assets/images/bad_01.png", false),
+      this.createObject("Wasbak", 60, 40, "/assets/images/wasbak_01.png", true),
+      this.createObject("Douche", 90, 90, "/assets/images/douche_01.png", true),
+      this.createObject("realtoilet", 40, 60, '/assets/images/real-toilet.png', true),
+      this.createObject("realBad", 80, 170, "/assets/images/real-bath.png", false),
+      this.createObject("realWasbak", 40, 100, "/assets/images/real-wasbak.png", true),
+      this.createObject("realDouche", 90, 90, "/assets/images/real-douche.png", true),
     ];
   }
 
-  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0, firstLoad: boolean = false): DrawableObject {
+  createObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, rotation: number = 0, x: number = 0, y: number = 0, firstLoad: boolean = false, unlocked: boolean = false): DrawableObject {
     return {
       name,
       width: width * 3,
       height: height * 3,
       image,
       mustTouchWall,
-      rotated: false,
-      rotation: 0,
+      rotation: rotation,
       x, 
       y,
       isColliding: false,
       firstLoadConfiguration: firstLoad,
+      unlocked: unlocked,
     };
   }
 
-  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, x: number = 0, y: number = 0, firstLoad: boolean = false): DrawableObject {
-    const newObject = this.createObject(name, width, height, image, mustTouchWall, x, y, firstLoad);
+  addObject(name: string, width: number, height: number, image: string, mustTouchWall: boolean, rotation: number = 0, x: number = 0, y: number = 0, firstLoad: boolean = false, unlocked: boolean = false): DrawableObject {
+    const newObject = this.createObject(name, width, height, image, mustTouchWall, rotation, x, y, firstLoad, unlocked);
     this.objects.push(newObject);
     return newObject;
   }
