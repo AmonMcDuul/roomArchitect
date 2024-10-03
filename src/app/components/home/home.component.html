@@ -184,13 +184,13 @@
           <div class="example-box"
                cdkDragBoundary=".example-boundary"
                cdkDrag
+               [cdkDragFreeDragPosition]="{x: item.x, y: item.y}"
                *ngFor="let item of items" 
                [ngStyle]="{
-               'transform': (item.firstLoadConfiguration ? 'translate(' + item.x + 'px, ' + item.y + 'px)' : '(' + item.x + 'px, ' + item.y + 'px)' ),
                }"
               [style.width.px]="item?.unlocked ? (item.width - item.width / 2) : item.width"
               [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
-               (cdkDragMoved)="onDrag($event, item)"
+               (cdkDragEnded)="onDrag($event, item)"
                (mousedown)="selectItem(item)">
             <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
             <button class="delete-object-button" (click)="removeObject(item)">x</button>

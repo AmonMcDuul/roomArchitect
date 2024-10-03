@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { CdkDrag, CdkDragEnd, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -202,10 +202,10 @@ export class HomeComponent {
     if (this.selectedItem) {
       this.selectedItem.unlocked = !this.selectedItem.unlocked;
       this.selectedItem.rotation = 0;  
-      if(!this.selectedItem){
-        this.removeObject(this.selectedItem);
-        this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, this.selectedItem.unlocked)
-      }
+      // if(!this.selectedItem.unlocked){
+      //   this.removeObject(this.selectedItem);
+      //   this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, this.selectedItem.unlocked)
+      // }
     }
   }
 
@@ -282,9 +282,12 @@ export class HomeComponent {
   }
 
   onDrag(event: any, item: DrawableObject) {
+
+    // 'transform': (item.firstLoadConfiguration ? 'translate(' + item.x + 'px, ' + item.y + 'px)' : '(' + item.x + 'px, ' + item.y + 'px)' ),
+
     const { x, y } = event.source.getFreeDragPosition();
-    item.y = y;
     item.x = x;
+    item.y = y;
     item.firstLoadConfiguration = false;
     if(!this.isLoadedHack){
       this.detectCollisions();
@@ -314,6 +317,7 @@ export class HomeComponent {
   }
   
   loadConfiguration(configName: string): void {
+    this.toggleClear();
     const savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
     const configToLoad = savedConfigs.find((config: { name: string; }) => config.name === configName);
   
