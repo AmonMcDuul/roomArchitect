@@ -146,7 +146,7 @@
           <label for="height">Height (cm):</label>
           <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
         </div>
-
+        <button (click)="unlockObject()">toggle free rotation</button>
         <div *ngIf="selectedItem.unlocked" class="form-group">
           <label for="rotation">Rotation (degrees): {{ selectedItem.rotation }}°</label>
           <input type="range" id="rotation" min="0" max="360" [(ngModel)]="selectedItem.rotation" (input)="rotateObjectFreely()" />
