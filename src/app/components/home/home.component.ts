@@ -14,8 +14,9 @@ import { GridCell } from '../../models/gridCell.model';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  gridX = 5;
-  gridY = 5;
+  Math = Math
+  gridX = 10;
+  gridY = 10;
   gridCellSize = 30;
   gridColumns: string = "";
   gridRows: string = "";
@@ -41,6 +42,8 @@ export class HomeComponent {
   showResize: boolean = false;
   showConfigurations: boolean = false;
 
+  toggleViewObjects: boolean = false;
+
   isLoadedHack: boolean = false;
 
   objectForm: FormGroup;
@@ -64,30 +67,68 @@ export class HomeComponent {
     this.loadSavedConfigurations();
   }
 
+  toggleClear() {
+    this.items.forEach(item => {
+      this.removeObject(item);
+    });
+    this.isLoadedHack = false;
+  }
+
   toggleGridSize() {
     this.showGridSize = !this.showGridSize;
-  }
-
-  toggleCreateObject() {
-    this.showCreateObject = !this.showCreateObject;
-  }
-
-  togglePredefinedObjects() {
-    this.showPredefinedObjects = !this.showPredefinedObjects;
-  }
-
-  toggleAvailableObjects() {
-    this.showAvailableObjects = !this.showAvailableObjects;
-  }
-
-  toggleResize() {
-    this.showResize = !this.showResize;
-  }
-
-  toggleConfigurations() {
-    this.showConfigurations = !this.showConfigurations;
+    if (this.showGridSize) {
+      this.resetOtherOptions('gridSize');
+    }
   }
   
+  toggleCreateObject() {
+    this.showCreateObject = !this.showCreateObject;
+    if (this.showCreateObject) {
+      this.resetOtherOptions('createObject');
+    }
+  }
+  
+  togglePredefinedObjects() {
+    this.showPredefinedObjects = !this.showPredefinedObjects;
+    if (this.showPredefinedObjects) {
+      this.resetOtherOptions('predefinedObjects');
+    }
+  }
+  
+  toggleAvailableObjects() {
+    this.showAvailableObjects = !this.showAvailableObjects;
+    if (this.showAvailableObjects) {
+      this.resetOtherOptions('availableObjects');
+    }
+  }
+  
+  toggleResize() {
+    this.showResize = !this.showResize;
+    if (this.showResize) {
+      this.resetOtherOptions('resize');
+    }
+  }
+  
+  toggleConfigurations() {
+    this.showConfigurations = !this.showConfigurations;
+    if (this.showConfigurations) {
+      this.resetOtherOptions('configurations');
+    }
+  }
+  
+  resetOtherOptions(activeOption: string) {
+    this.showGridSize = activeOption === 'gridSize';
+    this.showCreateObject = activeOption === 'createObject';
+    this.showPredefinedObjects = activeOption === 'predefinedObjects';
+    this.showAvailableObjects = activeOption === 'availableObjects';
+    this.showResize = activeOption === 'resize';
+    this.showConfigurations = activeOption === 'configurations';
+  }
+  
+  setViewObjects(){
+    this.toggleViewObjects = !this.toggleViewObjects;
+  }
+
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
     if (selectedPredefinedItem) {
       const x = 0; 
@@ -146,6 +187,13 @@ export class HomeComponent {
       this.selectedItem.width = this.selectedItem.height;
       this.selectedItem.height = temp;
       this.selectedItem.rotation = (this.selectedItem.rotation + 90) % 360;    
+    }
+  }
+
+  rotateObjectFreely() {
+    if (this.selectedItem) {
+      const rotation = this.selectedItem.rotation % 360;
+      this.selectedItem.rotation = rotation;
     }
   }
 

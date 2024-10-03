@@ -11,4 +11,6 @@ export interface DrawableObject {
     rotation: number;
     isColliding: boolean;
     firstLoadConfiguration: boolean;
+    boundingBoxWidth?: number; 
+    boundingBoxHeight?: number; 
   }
