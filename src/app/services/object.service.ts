@@ -14,14 +14,14 @@ export class ObjectService {
 
   initializeDefaultObjects(): void {
     this.predefinedObjects = [
-      this.createObject("toilet", 40, 60, "/assets/images/toiler_01.png", true),
-      this.createObject("Bad", 80, 170, "/assets/images/bad_01.png", false),
-      this.createObject("Wasbak", 60, 40, "/assets/images/wasbak_01.png", true),
-      this.createObject("Douche", 90, 90, "/assets/images/douche_01.png", true),
-      this.createObject("realtoilet", 40, 60, '/assets/images/real-toilet.png', true),
-      this.createObject("realBad", 80, 170, "/assets/images/real-bath.png", false),
-      this.createObject("realWasbak", 40, 100, "/assets/images/real-wasbak.png", true),
-      this.createObject("realDouche", 90, 90, "/assets/images/real-douche.png", true),
+      this.createObject("toilet", 40, 60, "assets/images/toiler_01.png", true),
+      this.createObject("Bad", 80, 170, "assets/images/bad_01.png", false),
+      this.createObject("Wasbak", 60, 40, "assets/images/wasbak_01.png", true),
+      this.createObject("Douche", 90, 90, "assets/images/douche_01.png", true),
+      this.createObject("realtoilet", 40, 60, 'assets/images/real-toilet.png', true),
+      this.createObject("realBad", 80, 170, "assets/images/real-bath.png", false),
+      this.createObject("realWasbak", 40, 100, "assets/images/real-wasbak.png", true),
+      this.createObject("realDouche", 90, 90, "assets/images/real-douche.png", true),
     ];
   }
 

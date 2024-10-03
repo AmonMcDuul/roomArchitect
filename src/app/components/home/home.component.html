@@ -158,14 +158,14 @@
   <div class="grid-container">
     <div class="horizontal-ruler" [style.width.px]="gridX * gridCellSize">
       <div *ngFor="let x of [].constructor(gridX); let i = index">
-        {{ i * 10 }} cm
+        {{ i * 10 }} 
       </div>
     </div>
     
     <div class="grid-and-vertical-ruler">
       <div class="vertical-ruler" [style.height.px]="gridY * gridCellSize">
         <div *ngFor="let y of [].constructor(gridY); let i = index">
-          {{ i * 10 }} cm
+          {{ i * 10 }} 
         </div>
       </div>
 

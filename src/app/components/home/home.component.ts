@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DrawableObject } from '../../models/drawable-object.model';
 import { ObjectService } from '../../services/object.service';
 import { GridCell } from '../../models/gridCell.model';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -200,10 +201,10 @@ export class HomeComponent {
   unlockObject() {
     if (this.selectedItem) {
       this.selectedItem.unlocked = !this.selectedItem.unlocked;
+      this.selectedItem.rotation = 0;  
       if(!this.selectedItem){
         this.removeObject(this.selectedItem);
-        this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, false)
-        this.items = this.objectService.getObjects();
+        this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, this.selectedItem.unlocked)
       }
     }
   }
@@ -281,10 +282,10 @@ export class HomeComponent {
   }
 
   onDrag(event: any, item: DrawableObject) {
-    item.firstLoadConfiguration = false;
     const { x, y } = event.source.getFreeDragPosition();
-    item.x = x;
     item.y = y;
+    item.x = x;
+    item.firstLoadConfiguration = false;
     if(!this.isLoadedHack){
       this.detectCollisions();
     }
@@ -320,7 +321,7 @@ export class HomeComponent {
       this.gridX = configToLoad.gridX;
       this.gridY = configToLoad.gridY;
   
-      this.items = configToLoad.items.map((item: { name: string; width: number; height: number; x: number; y: number; image: string; rotation: number; mustTouchWall: boolean, unlocked: boolean }) => ({
+      const itemsToLoad = configToLoad.items.map((item: { name: string; width: number; height: number; x: number; y: number; image: string; rotation: number; mustTouchWall: boolean, unlocked: boolean }) => ({
         name: item.name,
         width: item.width,
         height: item.height,
@@ -333,15 +334,15 @@ export class HomeComponent {
         unlocked: item.unlocked,
       }));
       
-      this.items.forEach(item => {
+      itemsToLoad.forEach((item: { name: string; width: number; height: number; image: string; mustTouchWall: boolean; rotation: number | undefined; x: number | undefined; y: number | undefined; unlocked: boolean | undefined; }) => {
         this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.mustTouchWall, item.rotation, item.x, item.y, true, item.unlocked);
       });
+      
       this.items = this.objectService.getObjects();
       this.updateGrid();
       this.isLoadedHack = true;
     }
   }
-  
   
   deleteConfiguration(configName: string): void {
     let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
