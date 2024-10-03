@@ -44,7 +44,7 @@ export class HomeComponent {
   showConfigurations: boolean = false;
 
   toggleViewObjects: boolean = false;
-
+  viewObjects = true;
   isLoadedHack: boolean = false;
 
   objectForm: FormGroup;
@@ -128,6 +128,7 @@ export class HomeComponent {
   
   setViewObjects(){
     this.toggleViewObjects = !this.toggleViewObjects;
+    this.viewObjects = !this.viewObjects;
   }
 
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
@@ -202,10 +203,6 @@ export class HomeComponent {
     if (this.selectedItem) {
       this.selectedItem.unlocked = !this.selectedItem.unlocked;
       this.selectedItem.rotation = 0;  
-      // if(!this.selectedItem.unlocked){
-      //   this.removeObject(this.selectedItem);
-      //   this.objectService.addObject(this.selectedItem.name, this.selectedItem.width / (this.gridCellSize / 10), this.selectedItem.height / (this.gridCellSize / 10), this.selectedItem.image, this.selectedItem.mustTouchWall, 0, this.selectedItem.x, this.selectedItem.y, true, this.selectedItem.unlocked)
-      // }
     }
   }
 
@@ -282,9 +279,6 @@ export class HomeComponent {
   }
 
   onDrag(event: any, item: DrawableObject) {
-
-    // 'transform': (item.firstLoadConfiguration ? 'translate(' + item.x + 'px, ' + item.y + 'px)' : '(' + item.x + 'px, ' + item.y + 'px)' ),
-
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;
     item.y = y;
@@ -314,6 +308,7 @@ export class HomeComponent {
     const savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
     savedConfigs.push(configuration);
     localStorage.setItem('savedConfigurations', JSON.stringify(savedConfigs));
+    this.loadSavedConfigurations();
   }
   
   loadConfiguration(configName: string): void {

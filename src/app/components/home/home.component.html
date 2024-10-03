@@ -7,15 +7,19 @@
         </h3>
         <div class="menu-group">
           <h3 (click)="toggleConfigurations()" class="collapsible-header">Configurations
-            <span class="arrow">{{ showConfigurations ? '▲' : '▼' }}</span>
+            <span class="arrow" [ngClass]="{'rotate': showConfigurations}">
+              ▲
+            </span>
           </h3>
-          <div *ngIf="showConfigurations" class="inside-menu-item">
+          <div class="inside-menu-item" [ngClass]="{'show': showConfigurations}">
             <div class="form-group">
               <label for="width">Name:</label>
-              <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
+              <div class="button-style">
+                <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
+                <button class="savebutton" [disabled]="newSaveName == ''" (click)="saveConfiguration(newSaveName)">+</button>
+              </div>
             </div>
           <ul>
-            <button class="savebutton" (click)="saveConfiguration(newSaveName)">Save</button>
             <li *ngFor="let config of savedConfigurations" (click)="loadConfiguration(config.name)">
               {{ config.name }}
               <button class="deletebutton" (click)="deleteConfiguration(config.name)">X</button>
@@ -24,9 +28,11 @@
           </div>
         </div>
         <h3 (click)="toggleGridSize()" class="collapsible-header">Grid size
-          <span class="arrow">{{ showGridSize ? '▲' : '▼' }}</span>
+          <span class="arrow" [ngClass]="{'rotate': showGridSize}">
+            ▲
+          </span>
         </h3>
-        <div *ngIf="showGridSize" class="inside-menu-item">
+        <div class="inside-menu-item" [ngClass]="{'show': showGridSize}">
         <div class="form-group">
           <label for="gridX">Grid Width (X):</label>
           <input type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
@@ -38,13 +44,11 @@
         </div>
     <form [formGroup]="objectForm">
       <h3 (click)="toggleCreateObject()" class="collapsible-header">Create object
-        <span class="arrow">{{ showCreateObject ? '▲' : '▼' }}</span>
+        <span class="arrow" [ngClass]="{'rotate': showCreateObject}">
+          ▲
+        </span>
       </h3>
-      <div *ngIf="showCreateObject" class="inside-menu-item">
-      <div class="form-group">
-        <label for="width">Name:</label>
-        <input type="string" id="name" formControlName="name" />
-      </div>
+      <div class="inside-menu-item" [ngClass]="{'show': showCreateObject}">
 
       <div class="form-group">
         <label for="width">Width (cm):</label>
@@ -58,37 +62,32 @@
     
       <div class="form-group">
         <label for="image">Image:</label>
-        <input type="string" id="image" formControlName="image" />
+        <div class="button-style">
+          <input type="string" id="image" formControlName="image" />
+        </div>
       </div>
 
-      <!-- <div class="form-group">
-        <label>
-          <input type="checkbox" formControlName="mustTouchWall" />
-          Must Touch Wall
-        </label>
-      </div> -->
-      <button (click)="onSubmit()" [disabled]="objectForm.invalid">Add object</button>
+      <div class="form-group">
+        <label for="width">Name:</label>
+        <div class="button-style">
+          <input type="string" id="name" formControlName="name" />
+          <button (click)="onSubmit()" [disabled]="objectForm.invalid">+</button>
+        </div>
+      </div>
       </div>
     </form>
-    <!-- <div class="menu-group">
-      <h3 (click)="togglePredefinedObjects()" class="collapsible-header">Predefined objects
-        <span class="arrow">{{ showPredefinedObjects ? '▲' : '▼' }}</span>
-      </h3>
-      <div *ngIf="showPredefinedObjects" class="inside-menu-item">
-        <ul>
-          <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
-            {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
-          </li>
-        </ul>
-      </div>
-    </div> -->
-
     <div class="menu-group">
       <h3 (click)="togglePredefinedObjects()" class="collapsible-header">Predefined objects
-        <span class="arrow">{{ showPredefinedObjects ? '▲' : '▼' }}</span>
+        <span class="arrow" [ngClass]="{'rotate': showPredefinedObjects}">
+          ▲
+        </span>
       </h3>
-      <div *ngIf="showPredefinedObjects" class="inside-menu-item ">
-        <button (click)="setViewObjects()">toggle</button>
+      <div class="inside-menu-item"  [ngClass]="{'show': showPredefinedObjects}">
+        <button 
+          class="view-objects-button" 
+          [ngClass]="{'on': viewObjects}" 
+          (click)="setViewObjects()">
+      </button>
         <div *ngIf="toggleViewObjects"> 
 
         <ul>
@@ -113,10 +112,11 @@
 
     <div class="menu-group">
       <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Available objects
-        <span class="arrow">{{ showAvailableObjects ? '▲' : '▼' }}</span>
+        <span class="arrow" [ngClass]="{'rotate': showAvailableObjects}">
+          ▲
+        </span>
       </h3>
-      <div *ngIf="showAvailableObjects" class="inside-menu-item">
-
+      <div class="inside-menu-item" [ngClass]="{'show': showAvailableObjects}">
       <ul>
         <li
           *ngFor="let object of items"
@@ -134,9 +134,11 @@
 
     <div *ngIf="selectedItem">
       <h3 (click)="toggleResize()" class="collapsible-header">Resize {{ selectedItem.name }}
-        <span class="arrow">{{ showResize ? '▲' : '▼' }}</span>
+        <span class="arrow" [ngClass]="{'rotate': showResize}">
+          ▲
+        </span>
       </h3>
-      <div *ngIf="showResize" class="inside-menu-item">
+      <div class="inside-menu-item" [ngClass]="{'show': showResize}">
         <div class="form-group">
           <label for="width">Width (cm):</label>
           <input type="number" [(ngModel)]="inputWidthCm" (input)="updateSizeInCm()" />
@@ -186,8 +188,6 @@
                cdkDrag
                [cdkDragFreeDragPosition]="{x: item.x, y: item.y}"
                *ngFor="let item of items" 
-               [ngStyle]="{
-               }"
               [style.width.px]="item?.unlocked ? (item.width - item.width / 2) : item.width"
               [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
                (cdkDragEnded)="onDrag($event, item)"
