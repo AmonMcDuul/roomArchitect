@@ -162,6 +162,7 @@
       <div *ngFor="let x of [].constructor(gridX); let i = index">
         {{ i * 10 }} 
       </div>
+      {{gridX * 10}}
     </div>
     
     <div class="grid-and-vertical-ruler">
@@ -169,6 +170,7 @@
         <div *ngFor="let y of [].constructor(gridY); let i = index">
           {{ i * 10 }} 
         </div>
+      {{gridY * 10}}
       </div>
 
       <div class="example-boundary" [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight">
