@@ -220,6 +220,9 @@ export class HomeComponent {
   removeObject(object: DrawableObject): void {
     this.objectService.removeObject(object.name, object.x);
     this.items = this.objectService.getObjects();
+    if (this.selectedItem == object){
+      this.selectedItem = null;
+    }
   }
 
   onSubmit(): void {
@@ -249,54 +252,11 @@ export class HomeComponent {
     this.gridCells[index].isClicked = !this.gridCells[index].isClicked;
   }
 
-  checkCollision(obj1: DrawableObject, obj2: DrawableObject): boolean {
-    return obj1.x < obj2.x + obj2.width &&
-           obj1.x + obj1.width > obj2.x &&
-           obj1.y < obj2.y + obj2.height &&
-           obj1.y + obj1.height > obj2.y;
-  }
-
-  checkCollisionWithGridCells(obj: DrawableObject): boolean {
-    for (let cell of this.gridCells) {
-      if (cell.isClicked &&
-          obj.x < cell.x + cell.width &&
-          obj.x + obj.width > cell.x &&
-          obj.y < cell.y + cell.height &&
-          obj.y + obj.height > cell.y) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  detectCollisions() {
-    for (let i = 0; i < this.items.length; i++) {
-        const obj1 = this.items[i];
-        obj1.isColliding = false; 
-        
-        for (let j = 0; j < this.items.length; j++) {
-            if (i === j) continue; 
-            
-            const obj2 = this.items[j];
-            if (this.checkCollision(obj1, obj2)) {
-                obj1.isColliding = true;
-                obj2.isColliding = true;
-            }
-        }
-        if (this.checkCollisionWithGridCells(obj1)) {
-          obj1.isColliding = true; 
-        }
-    }
-  }
-
   onDrag(event: any, item: DrawableObject) {
     const { x, y } = event.source.getFreeDragPosition();
     item.x = x;
     item.y = y;
     item.firstLoadConfiguration = false;
-    if(!this.isLoadedHack){
-      this.detectCollisions();
-    }
   }
 
   saveConfiguration(configName: string): void {
