@@ -3,10 +3,10 @@
 </div>
 <div class="main-container">
       <div class="menu-items">
-        <h3 (click)="toggleClear()" class="collapsible-header">Clear
+        <h3 (click)="toggleClear()" class="collapsible-header">New sketch
         </h3>
         <div class="menu-group">
-          <h3 (click)="toggleConfigurations()" class="collapsible-header">Configurations
+          <h3 (click)="toggleConfigurations()" class="collapsible-header">Save/load
             <span class="arrow" [ngClass]="{'rotate': showConfigurations}">
               ▲
             </span>
@@ -34,11 +34,11 @@
         </h3>
         <div class="inside-menu-item" [ngClass]="{'show': showGridSize}">
         <div class="form-group">
-          <label for="gridX">Grid Width (X):</label>
+          <label for="gridX">Grid width (X):</label>
           <input type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
         </div>
         <div class="form-group">
-          <label for="gridY">Grid Height (Y):</label>
+          <label for="gridY">Grid height (Y):</label>
           <input type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
         </div>
         </div>
@@ -111,11 +111,13 @@
     </div>
 
     <div class="menu-group">
-      <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Available objects
-        <span class="arrow" [ngClass]="{'rotate': showAvailableObjects}">
-          ▲
-        </span>
-      </h3>
+      @if(this.items.length != 0){
+        <h3 (click)="toggleAvailableObjects()" class="collapsible-header">Placed objects
+          <span class="arrow" [ngClass]="{'rotate': showAvailableObjects}">
+            ▲
+          </span>
+        </h3>
+      }
       <div class="inside-menu-item" [ngClass]="{'show': showAvailableObjects}">
       <ul>
         <li
@@ -133,7 +135,7 @@
     </div>
 
     <div *ngIf="selectedItem">
-      <h3 (click)="toggleResize()" class="collapsible-header">Resize {{ selectedItem.name }}
+      <h3 (click)="toggleResize()" class="collapsible-header">Options: {{ selectedItem.name }}
         <span class="arrow" [ngClass]="{'rotate': showResize}">
           ▲
         </span>
@@ -148,14 +150,15 @@
           <label for="height">Height (cm):</label>
           <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
         </div>
-        <button (click)="unlockObject()">toggle free rotation</button>
+        <button (click)="unlockObject()">Toggle free rotation</button>
+        <br>
         <div *ngIf="selectedItem.unlocked" class="form-group">
-          <label for="rotation">Rotation (degrees): {{ selectedItem.rotation }}°</label>
+          <label for="rotation">Rotation: {{ selectedItem.rotation }}°</label>
           <input type="range" id="rotation" min="0" max="360" [(ngModel)]="selectedItem.rotation" (input)="rotateObjectFreely()" />
         </div>
       </div>
     </div>
-
+      <a href="https://amonmcduul.github.io/portfolio-frontend/" target="_blank" class="credits">Created by Joran Schols, 2024</a> 
   </div>
   <div class="grid-container">
     <div class="horizontal-ruler" [style.width.px]="gridX * gridCellSize">
@@ -205,6 +208,7 @@
                  }">
           </div>
         </div>
+        
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
   background-color: #546e7a; 
   padding-top: 10px;
   padding-left: 20px;
-  border-bottom: 1px solid #455a64;
+  border-bottom: 2px solid #455a64;
 }
 
 .main-container {
@@ -289,7 +289,7 @@ button:disabled {
 }
 
 button:hover {
-  background-color: #58a860;
+  background-color: #58a860a5;
 }
 
 .rotate-button {
@@ -315,7 +315,7 @@ button:hover {
 }
 
 .delete-object-button:hover {
-  background-color: #e5383562;
+  background-color: #e538358b;
 }
 
 .unlock-object-button {
@@ -330,11 +330,10 @@ button:hover {
 }
 
 .unlock-object-button:hover {
-  background-color: #1e88e5;
+  background-color: #1e88e589;
 }
 
 .menu-items{
-  height: vh;
   background-color: #546e7a;
 }
 
@@ -351,10 +350,9 @@ button:hover {
   align-items: center; 
   background-color: #546e7a;
   color: white;
-  padding: 20px;
+  padding: 16px;
   margin: 0px;
-  border: 1px solid #455a64;
-
+  border-bottom: 2px solid #455a64;
 }
 
 
@@ -368,7 +366,7 @@ button:hover {
   transition: max-height 0.5s ease, padding 0.5s ease; 
   padding: 0 10px; 
   background-color: #eceff2; 
-  border: 1px solid #455a64;
+  border-right: 1px solid #455a64;
 }
 
 .show {
@@ -383,6 +381,19 @@ button:hover {
 
 .arrow.rotate {
   transform: rotate(180deg);
+}
+
+.credits {
+  position: absolute;
+  bottom: 10px;
+  padding-left: 10px;
+  color: black;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.credits:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 768px) {

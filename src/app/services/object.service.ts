@@ -32,6 +32,7 @@ export class ObjectService {
       height: height * 3,
       image,
       mustTouchWall,
+      rotated: false,
       rotation: rotation,
       x, 
       y,

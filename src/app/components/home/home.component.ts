@@ -42,6 +42,7 @@ export class HomeComponent {
   showAvailableObjects: boolean = false;
   showResize: boolean = false;
   showConfigurations: boolean = false;
+  showNothing: boolean = false;
 
   toggleViewObjects: boolean = false;
   viewObjects = true;
@@ -54,8 +55,8 @@ export class HomeComponent {
     this.updateGridSize(20, 26);
     this.objectForm = this.fb.group({
       name: ["", [Validators.required]],
-      width: [1, [Validators.required, Validators.min(1)]],
-      height: [1, [Validators.required, Validators.min(1)]],
+      width: [50, [Validators.required, Validators.min(1)]],
+      height: [50, [Validators.required, Validators.min(1)]],
       image: [""],
       mustTouchWall: [false],
     });
@@ -72,6 +73,8 @@ export class HomeComponent {
     this.items.forEach(item => {
       this.removeObject(item);
     });
+    this.resetOtherOptions('clear');
+    this.selectedItem = null;
     this.isLoadedHack = false;
   }
 
@@ -118,6 +121,7 @@ export class HomeComponent {
   }
   
   resetOtherOptions(activeOption: string) {
+    this.showNothing = activeOption === 'clear';
     this.showGridSize = activeOption === 'gridSize';
     this.showCreateObject = activeOption === 'createObject';
     this.showPredefinedObjects = activeOption === 'predefinedObjects';
@@ -185,6 +189,7 @@ export class HomeComponent {
 
   rotateObject() {
     if (this.selectedItem) {
+      this.selectedItem.rotated = !this.selectedItem.rotated;
       var temp = this.selectedItem.width;
       this.selectedItem.width = this.selectedItem.height;
       this.selectedItem.height = temp;
@@ -201,8 +206,14 @@ export class HomeComponent {
 
   unlockObject() {
     if (this.selectedItem) {
-      this.selectedItem.unlocked = !this.selectedItem.unlocked;
+      if(this.selectedItem.rotated){
+        this.selectedItem.rotated = false;
+        var temp = this.selectedItem.width;
+        this.selectedItem.width = this.selectedItem.height;
+        this.selectedItem.height = temp;
+      }
       this.selectedItem.rotation = 0;  
+      this.selectedItem.unlocked = !this.selectedItem.unlocked;
     }
   }
 
