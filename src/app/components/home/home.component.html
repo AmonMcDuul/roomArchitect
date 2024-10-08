@@ -158,9 +158,8 @@
         </div>
       </div>
     </div>
-      <a href="https://amonmcduul.github.io/portfolio-frontend/" target="_blank" class="credits">Created by Joran Schols, 2024</a> 
   </div>
-  <div class="grid-container">
+  <div class="grid-container" id="grid-container">
     <div class="horizontal-ruler" [style.width.px]="gridX * gridCellSize">
       <div *ngFor="let x of [].constructor(gridX); let i = index">
         {{ i * 10 }} 
@@ -197,9 +196,9 @@
               [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
                (cdkDragEnded)="onDrag($event, item)"
                (mousedown)="selectItem(item)">
-            <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
-            <button class="delete-object-button" (click)="removeObject(item)">x</button>
-            <button class="unlock-object-button" (click)="unlockObject()">&#9839;</button>
+                 <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
+                 <button class="delete-object-button" (click)="removeObject(item)">x</button>
+                 <button class="unlock-object-button" (click)="unlockObject()">&#9839;</button>
             <img [src]="item.image" alt="{{ item.name }}" class="object-image"
                  [ngStyle]="{
                    'transform': 'rotate(' + item.rotation + 'deg)',
@@ -208,8 +207,12 @@
                  }">
           </div>
         </div>
-        
+        <button (click)="captureGridAsImage()">Export Grid to PDF</button>
       </div>
     </div>
   </div>
 </div>
+<div class="footer">
+  <a href="https://amonmcduul.github.io/portfolio-frontend/" target="_blank" class="credits">Created by Joran Schols, 2024</a> 
+</div>
+

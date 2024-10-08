@@ -384,9 +384,12 @@ button:hover {
   transform: rotate(180deg);
 }
 
+.footer {
+  height: 20px;
+  margin-top: 10px;
+}
+
 .credits {
-  position: absolute;
-  bottom: 10px;
   padding-left: 10px;
   color: black;
   text-decoration: none;

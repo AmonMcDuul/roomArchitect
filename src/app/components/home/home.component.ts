@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DrawableObject } from '../../models/drawable-object.model';
 import { ObjectService } from '../../services/object.service';
 import { GridCell } from '../../models/gridCell.model';
-import { timeout } from 'rxjs';
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-home',
@@ -73,6 +74,9 @@ export class HomeComponent {
     this.items.forEach(item => {
       this.removeObject(item);
     });
+    this.gridCells.forEach(cell => {
+      cell.isClicked = false;
+    })
     this.resetOtherOptions('clear');
     this.selectedItem = null;
     this.isLoadedHack = false;
@@ -323,5 +327,21 @@ export class HomeComponent {
   
   loadSavedConfigurations(): void {
     this.savedConfigurations = JSON.parse(localStorage.getItem('savedConfigurations') || '[]');
+  }
+
+  captureGridAsImage() {
+    const gridElement = document.getElementById('grid-container');
+    if (gridElement) {
+      html2canvas(gridElement).then((canvas: { toDataURL: (arg0: string) => any; }) => {
+        const imgData = canvas.toDataURL('image/png');
+        this.exportToPDF(imgData);
+      });
+    }
+  }
+
+  exportToPDF(imgData: string) {
+    const pdf = new jsPDF('p', 'mm', 'a4'); 
+    pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+    pdf.save('grid-export.pdf');
   }
 }
