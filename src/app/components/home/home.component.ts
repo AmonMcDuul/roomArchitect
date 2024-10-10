@@ -30,6 +30,7 @@ export class HomeComponent {
   selectedItem: any = null;
   inputWidthCm: number = 0; 
   inputHeightCm: number = 0; 
+  emailAddress: string = "";
 
   items: DrawableObject[] = [];
   predefinedItems: DrawableObject[] = [];
@@ -44,6 +45,7 @@ export class HomeComponent {
   showResize: boolean = false;
   showConfigurations: boolean = false;
   showNothing: boolean = false;
+  showExportEmail: boolean = false;
 
   toggleViewObjects: boolean = false;
   viewObjects = true;
@@ -123,15 +125,23 @@ export class HomeComponent {
       this.resetOtherOptions('configurations');
     }
   }
+
+  toggleExportEmail() {
+    this.showExportEmail = !this.showExportEmail;
+    if (this.showExportEmail) {
+      this.resetOtherOptions('exportemail');
+    }
+  }
   
   resetOtherOptions(activeOption: string) {
-    this.showNothing = activeOption === 'clear';
-    this.showGridSize = activeOption === 'gridSize';
-    this.showCreateObject = activeOption === 'createObject';
-    this.showPredefinedObjects = activeOption === 'predefinedObjects';
-    this.showAvailableObjects = activeOption === 'availableObjects';
-    this.showResize = activeOption === 'resize';
-    this.showConfigurations = activeOption === 'configurations';
+    // this.showNothing = activeOption === 'clear';
+    // this.showGridSize = activeOption === 'gridSize';
+    // this.showCreateObject = activeOption === 'createObject';
+    // this.showPredefinedObjects = activeOption === 'predefinedObjects';
+    // this.showAvailableObjects = activeOption === 'availableObjects';
+    // this.showResize = activeOption === 'resize';
+    // this.showConfigurations = activeOption === 'configurations';
+    // this.showExportEmail = activeOption === 'exportemail';
   }
   
   setViewObjects(){
@@ -232,8 +242,12 @@ export class HomeComponent {
   onSubmit(): void {
     if (this.objectForm.valid) {
       const { name, width, height, image, mustTouchWall } = this.objectForm.value;
-      this.objectService.addObject(name, width, height, image, mustTouchWall);
-      this.objectForm.reset({ width: 1, height: 1, mustTouchWall: false });
+      let img = image;
+      if(image == ""){
+        img = "assets/images/bad_01.png";
+      }
+      this.objectService.addObject(name, width, height, img, mustTouchWall);
+      this.objectForm.reset({ width: 50, height: 50, image: "", mustTouchWall: false });
     }
   }
 
@@ -343,5 +357,31 @@ export class HomeComponent {
     const pdf = new jsPDF('p', 'mm', 'a4'); 
     pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
     pdf.save('grid-export.pdf');
+  }
+
+  addToGridX(input: boolean){
+    if(input){
+      this.gridX++;
+      this.updateGridSize(this.gridX, this.gridY);
+    }
+    if(!input && this.gridX > 1){
+      this.gridX--;
+      this.updateGridSize(this.gridX, this.gridY);
+    }
+  }
+
+  addToGridY(input: boolean){
+    if(input){
+      this.gridY++;
+      this.updateGridSize(this.gridX, this.gridY);
+    }
+    if(!input && this.gridY > 1){
+      this.gridY--;
+      this.updateGridSize(this.gridX, this.gridY);
+    }
+  }
+
+  sendEmail(){
+    console.log("send email not implemented");
   }
 }

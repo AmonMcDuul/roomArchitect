@@ -6,6 +6,24 @@
         <h3 (click)="toggleClear()" class="collapsible-header">New sketch
         </h3>
         <div class="menu-group">
+          <h3 (click)="toggleExportEmail()" class="collapsible-header">Export / E-mail
+            <span class="arrow" [ngClass]="{'rotate': showExportEmail}">
+              ▲
+            </span>
+          </h3>
+          <div class="inside-menu-item" [ngClass]="{'show': showExportEmail}">
+            <div class="form-group">
+              <label for="width">E-mail:</label>
+              <div class="button-style">
+                <input type="string" [(ngModel)]="emailAddress" />
+                <button class="savebutton" [disabled]="emailAddress == ''" (click)="sendEmail()">Send e-mail</button>
+              </div>
+            </div>
+              <button (click)="captureGridAsImage()">Export grid to PDF</button>
+          </div>
+        </div>
+
+        <div class="menu-group">
           <h3 (click)="toggleConfigurations()" class="collapsible-header">Save/load
             <span class="arrow" [ngClass]="{'rotate': showConfigurations}">
               ▲
@@ -15,7 +33,7 @@
             <div class="form-group">
               <label for="width">Name:</label>
               <div class="button-style">
-                <input type="string" [(ngModel)]="newSaveName" (input)="updateSizeInCm()" />
+                <input type="string" [(ngModel)]="newSaveName" />
                 <button class="savebutton" [disabled]="newSaveName == ''" (click)="saveConfiguration(newSaveName)">+</button>
               </div>
             </div>
@@ -33,15 +51,27 @@
           </span>
         </h3>
         <div class="inside-menu-item" [ngClass]="{'show': showGridSize}">
-        <div class="form-group">
-          <label for="gridX">Grid width (X):</label>
-          <input type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
+          <div class="">1 cell : 10 cm x 10 cm</div>
+          <div class="form-group">
+            <div class="addtogrid-style">
+              <label class="addtogrid-label" for="gridX">Grid X:</label>
+              <button (click)="addToGridX(false)" class="addtogrid-button">&#8722;</button>
+              <input class="addtogrid-input" type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
+              <button (click)="addToGridX(true)" class="addtogrid-button">&#43;</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="addtogrid-style">
+              <label class="addtogrid-label" for="gridY">Grid Y:</label>
+              <button (click)="addToGridY(false)" class="addtogrid-button">&#8722;</button>
+              <input class="addtogrid-input" type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
+              <button (click)="addToGridY(true)" class="addtogrid-button">&#43;</button>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="gridY">Grid height (Y):</label>
-          <input type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
-        </div>
-        </div>
+
+    <div>
+    </div>
     <form [formGroup]="objectForm">
       <h3 (click)="toggleCreateObject()" class="collapsible-header">Create object
         <span class="arrow" [ngClass]="{'rotate': showCreateObject}">
@@ -49,31 +79,30 @@
         </span>
       </h3>
       <div class="inside-menu-item" [ngClass]="{'show': showCreateObject}">
-
-      <div class="form-group">
-        <label for="width">Width (cm):</label>
-        <input type="number" id="width" formControlName="width" min="1" />
-      </div>
-    
-      <div class="form-group">
-        <label for="height">Height (cm):</label>
-        <input type="number" id="height" formControlName="height" min="1" />
-      </div>
-    
-      <div class="form-group">
-        <label for="image">Image:</label>
-        <div class="button-style">
-          <input type="string" id="image" formControlName="image" />
+        <div class="form-group">
+          <label for="width">Width (cm):</label>
+          <input type="number" id="width" formControlName="width" min="1" />
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="width">Name:</label>
-        <div class="button-style">
-          <input type="string" id="name" formControlName="name" />
-          <button (click)="onSubmit()" [disabled]="objectForm.invalid">+</button>
+      
+        <div class="form-group">
+          <label for="height">Height (cm):</label>
+          <input type="number" id="height" formControlName="height" min="1" />
         </div>
-      </div>
+      
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <div class="button-style">
+            <input type="string" id="image" formControlName="image" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="width">Name:</label>
+          <div class="button-style">
+            <input type="string" id="name" formControlName="name" />
+            <button (click)="onSubmit()" [disabled]="objectForm.invalid">+</button>
+          </div>
+        </div>
       </div>
     </form>
     <div class="menu-group">
@@ -89,12 +118,11 @@
           (click)="setViewObjects()">
       </button>
         <div *ngIf="toggleViewObjects"> 
-
-        <ul>
-          <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
-            {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
-          </li>
-        </ul>
+          <ul>
+            <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
+              {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
+            </li>
+          </ul>
         </div>
         <div *ngIf="!toggleViewObjects"> 
           <div class="predefined-items-container"> 
@@ -207,12 +235,12 @@
                  }">
           </div>
         </div>
-        <button (click)="captureGridAsImage()">Export Grid to PDF</button>
+          <div class="ratio">1 cell : 10 cm x 10 cm</div>
       </div>
     </div>
   </div>
 </div>
 <div class="footer">
-  <a href="https://amonmcduul.github.io/portfolio-frontend/" target="_blank" class="credits">Created by Joran Schols, 2024</a> 
+  <a href="https://scholsdev.azurewebsites.net/" target="_blank" class="credits">Created by Joran Schols, 2024</a> 
 </div>
 
