@@ -14,14 +14,15 @@ export class ObjectService {
 
   initializeDefaultObjects(): void {
     this.predefinedObjects = [
-      this.createObject("toilet", 40, 60, "assets/images/toiler_01.png", true),
-      this.createObject("Bad", 80, 170, "assets/images/bad_01.png", false),
-      this.createObject("Wasbak", 60, 40, "assets/images/wasbak_01.png", true),
-      this.createObject("Douche", 90, 90, "assets/images/douche_01.png", true),
-      this.createObject("realtoilet", 40, 60, 'assets/images/real-toilet.png', true),
-      this.createObject("realBad", 80, 170, "assets/images/real-bath.png", false),
-      this.createObject("realWasbak", 40, 100, "assets/images/real-wasbak.png", true),
-      this.createObject("realDouche", 90, 90, "assets/images/real-douche.png", true),
+      this.createObject("toilet", 40, 60, "assets/images/toilet_new.png", true),
+      this.createObject("Bad", 80, 170, "assets/images/bad_new.png", false),
+      this.createObject("Wasbak", 60, 40, "assets/images/wasbak_new.png", true),
+      this.createObject("Wasbak_lang", 100, 40, "assets/images/wasbak_lang_new.png", true),
+      this.createObject("Douche", 90, 90, "assets/images/douche_new.png", true),
+      this.createObject("muur_new", 80, 30, "assets/images/muur_new.png", true),
+      this.createObject("divers", 50, 50, "assets/images/divers_new.png", true),
+      this.createObject("deur rechts", 50, 50, "assets/images/deur_new.png", true),
+      this.createObject("deur links", 50, 50, "assets/images/deur_li_new.png", true),
     ];
   }
 

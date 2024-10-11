@@ -134,14 +134,14 @@ export class HomeComponent {
   }
   
   resetOtherOptions(activeOption: string) {
-    // this.showNothing = activeOption === 'clear';
-    // this.showGridSize = activeOption === 'gridSize';
-    // this.showCreateObject = activeOption === 'createObject';
-    // this.showPredefinedObjects = activeOption === 'predefinedObjects';
-    // this.showAvailableObjects = activeOption === 'availableObjects';
-    // this.showResize = activeOption === 'resize';
-    // this.showConfigurations = activeOption === 'configurations';
-    // this.showExportEmail = activeOption === 'exportemail';
+    this.showNothing = activeOption === 'clear';
+    this.showGridSize = activeOption === 'gridSize';
+    this.showCreateObject = activeOption === 'createObject';
+    this.showPredefinedObjects = activeOption === 'predefinedObjects';
+    this.showAvailableObjects = activeOption === 'availableObjects';
+    this.showResize = activeOption === 'resize';
+    this.showConfigurations = activeOption === 'configurations';
+    this.showExportEmail = activeOption === 'exportemail';
   }
   
   setViewObjects(){
@@ -244,7 +244,7 @@ export class HomeComponent {
       const { name, width, height, image, mustTouchWall } = this.objectForm.value;
       let img = image;
       if(image == ""){
-        img = "assets/images/bad_01.png";
+        img = "assets/images/divers_new.png";
       }
       this.objectService.addObject(name, width, height, img, mustTouchWall);
       this.objectForm.reset({ width: 50, height: 50, image: "", mustTouchWall: false });

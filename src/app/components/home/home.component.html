@@ -24,7 +24,7 @@
         </div>
 
         <div class="menu-group">
-          <h3 (click)="toggleConfigurations()" class="collapsible-header">Save/load
+          <h3 (click)="toggleConfigurations()" class="collapsible-header">Save / Load
             <span class="arrow" [ngClass]="{'rotate': showConfigurations}">
               ▲
             </span>
@@ -85,7 +85,7 @@
         </div>
       
         <div class="form-group">
-          <label for="height">Height (cm):</label>
+          <label for="height">Length (cm):</label>
           <input type="number" id="height" formControlName="height" min="1" />
         </div>
       
@@ -132,7 +132,6 @@
               </li>
             </ul>
           </div>
-
         </div>
 
       </div>
@@ -175,7 +174,7 @@
         </div>
       
         <div class="form-group">
-          <label for="height">Height (cm):</label>
+          <label for="height">Length (cm):</label>
           <input type="number" [(ngModel)]="inputHeightCm" (input)="updateSizeInCm()" />
         </div>
         <button (click)="unlockObject()">Toggle free rotation</button>
@@ -220,8 +219,8 @@
                cdkDrag
                [cdkDragFreeDragPosition]="{x: item.x, y: item.y}"
                *ngFor="let item of items" 
-              [style.width.px]="item?.unlocked ? (item.width - item.width / 2) : item.width"
-              [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
+               [style.width.px]="item?.unlocked ? (item.width - item.width / 2) : item.width"
+               [style.height.px]="item?.unlocked ? (item.height - item.height / 2) : item.height"
                (cdkDragEnded)="onDrag($event, item)"
                (mousedown)="selectItem(item)">
                  <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
