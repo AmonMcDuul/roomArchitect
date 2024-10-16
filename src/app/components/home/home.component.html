@@ -3,8 +3,30 @@
 </div>
 <div class="main-container">
       <div class="menu-items">
-        <h3 (click)="toggleClear()" class="collapsible-header">New sketch
+        <h3 (click)="toggleGridSize()" class="collapsible-header">New sketch
+          <span class="arrow" [ngClass]="{'rotate': showNewSketch}">
+            ▲
+          </span>
         </h3>
+        <div class="inside-menu-item" [ngClass]="{'show': showNewSketch}">
+          <div class="form-group">
+            <div class="addtogrid-style">
+              <label class="addtogrid-label" for="gridX">Grid X:</label>
+              <button (click)="addToGridX(false)" class="addtogrid-button">&#8722;</button>
+              <input class="addtogrid-input" type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
+              <button (click)="addToGridX(true)" class="addtogrid-button">&#43;</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="addtogrid-style">
+              <label class="addtogrid-label" for="gridY">Grid Y:</label>
+              <button (click)="addToGridY(false)" class="addtogrid-button">&#8722;</button>
+              <input class="addtogrid-input" type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
+              <button (click)="addToGridY(true)" class="addtogrid-button">&#43;</button>
+            </div>
+          </div>
+          <button (click)="toggleClear()">Create new sketch</button>
+        </div>
         <div class="menu-group">
           <h3 (click)="toggleExportEmail()" class="collapsible-header">Export / E-mail
             <span class="arrow" [ngClass]="{'rotate': showExportEmail}">
@@ -45,86 +67,31 @@
           </ul>
           </div>
         </div>
-        <h3 (click)="toggleGridSize()" class="collapsible-header">Grid size
-          <span class="arrow" [ngClass]="{'rotate': showGridSize}">
-            ▲
-          </span>
-        </h3>
-        <div class="inside-menu-item" [ngClass]="{'show': showGridSize}">
-          <div class="">1 cell : 10 cm x 10 cm</div>
-          <div class="form-group">
-            <div class="addtogrid-style">
-              <label class="addtogrid-label" for="gridX">Grid X:</label>
-              <button (click)="addToGridX(false)" class="addtogrid-button">&#8722;</button>
-              <input class="addtogrid-input" type="number" id="gridX" [(ngModel)]="gridX" (input)="updateGridSize(gridX, gridY)" min="1" />
-              <button (click)="addToGridX(true)" class="addtogrid-button">&#43;</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="addtogrid-style">
-              <label class="addtogrid-label" for="gridY">Grid Y:</label>
-              <button (click)="addToGridY(false)" class="addtogrid-button">&#8722;</button>
-              <input class="addtogrid-input" type="number" id="gridY" [(ngModel)]="gridY" (input)="updateGridSize(gridX, gridY)" min="1" />
-              <button (click)="addToGridY(true)" class="addtogrid-button">&#43;</button>
-            </div>
-          </div>
-        </div>
-
-    <div>
+      <div>
     </div>
-    <form [formGroup]="objectForm">
-      <h3 (click)="toggleCreateObject()" class="collapsible-header">Create object
-        <span class="arrow" [ngClass]="{'rotate': showCreateObject}">
-          ▲
-        </span>
-      </h3>
-      <div class="inside-menu-item" [ngClass]="{'show': showCreateObject}">
-        <div class="form-group">
-          <label for="width">Width (cm):</label>
-          <input type="number" id="width" formControlName="width" min="1" />
-        </div>
-      
-        <div class="form-group">
-          <label for="height">Length (cm):</label>
-          <input type="number" id="height" formControlName="height" min="1" />
-        </div>
-      
-        <div class="form-group">
-          <label for="image">Image:</label>
-          <div class="button-style">
-            <input type="string" id="image" formControlName="image" />
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="width">Name:</label>
-          <div class="button-style">
-            <input type="string" id="name" formControlName="name" />
-            <button (click)="onSubmit()" [disabled]="objectForm.invalid">+</button>
-          </div>
-        </div>
-      </div>
-    </form>
     <div class="menu-group">
-      <h3 (click)="togglePredefinedObjects()" class="collapsible-header">Predefined objects
+      <h3 (click)="togglePredefinedObjects()" class="collapsible-header">Objects
         <span class="arrow" [ngClass]="{'rotate': showPredefinedObjects}">
           ▲
         </span>
       </h3>
       <div class="inside-menu-item"  [ngClass]="{'show': showPredefinedObjects}">
-        <button 
-          class="view-objects-button" 
-          [ngClass]="{'on': viewObjects}" 
-          (click)="setViewObjects()">
-      </button>
-        <div *ngIf="toggleViewObjects"> 
+        @if(!toggleCreateObject){
+          <button 
+            class="view-objects-button" 
+            [ngClass]="{'on': viewObjects}" 
+            (click)="setViewObjects()">
+          </button>
+        }
+        <div *ngIf="toggleViewObjects && !toggleCreateObject"> 
           <ul>
             <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
               {{ object.name }} - {{ object.width / 3 }}x{{ object.height / 3 }}
             </li>
           </ul>
         </div>
-        <div *ngIf="!toggleViewObjects"> 
+        <div *ngIf="!toggleViewObjects && !toggleCreateObject"> 
           <div class="predefined-items-container"> 
             <ul class="predefined-items">
               <li *ngFor="let object of predefinedItems" (click)="addPredefinedItem(object)" [class.selected]="selectedItem?.name === object.name">
@@ -134,6 +101,45 @@
           </div>
         </div>
 
+        @if(toggleCreateObject){
+          <form [formGroup]="objectForm">
+
+            <div class="form-group">
+              <label for="width">Width (cm):</label>
+              <input type="number" id="width" formControlName="width" min="1" />
+            </div>
+            
+            <div class="form-group">
+              <label for="height">Length (cm):</label>
+              <input type="number" id="height" formControlName="height" min="1" />
+            </div>
+            
+            <div class="form-group">
+              <label for="image">Image:</label>
+            <div class="button-style">
+              <input type="string" id="image" formControlName="image" />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="width">Name:</label>
+            <div class="button-style">
+              <input type="string" id="name" formControlName="name" />
+              <button (click)="onSubmit()" [disabled]="objectForm.invalid">+</button>
+            </div>
+          </div>
+        </form>
+        }
+        <button 
+            class="create-objects-button" 
+            (click)="setCreateObject()">
+            @if(!toggleCreateObject){
+              Create new object
+            }
+            @else {
+              Return
+            }
+        </button>
       </div>
     </div>
 
@@ -193,7 +199,6 @@
       </div>
       {{gridX * 10}}
     </div>
-    
     <div class="grid-and-vertical-ruler">
       <div class="vertical-ruler" [style.height.px]="gridY * gridCellSize">
         <div *ngFor="let y of [].constructor(gridY); let i = index">
@@ -226,12 +231,13 @@
                  <button *ngIf="!item.unlocked" class="rotate-button" (click)="rotateObject()">&#10227;</button>
                  <button class="delete-object-button" (click)="removeObject(item)">x</button>
                  <button class="unlock-object-button" (click)="unlockObject()">&#9839;</button>
-            <img [src]="item.image" alt="{{ item.name }}" class="object-image"
+                <img [src]="item.image" alt="{{ item.name }}" class="object-image"
                  [ngStyle]="{
                    'transform': 'rotate(' + item.rotation + 'deg)',
                    'width.px': item.rotation === 90 || item.rotation === 270 ? item.height : item.width,
                    'height.px': item.rotation === 90 || item.rotation === 270 ? item.width : item.height
-                 }">
+                 }"
+                 >
           </div>
         </div>
           <div class="ratio">1 cell : 10 cm x 10 cm</div>
@@ -240,6 +246,6 @@
   </div>
 </div>
 <div class="footer">
-  <a href="https://scholsdev.azurewebsites.net/" target="_blank" class="credits">Created by FlamSoft, 2024</a> 
+  <a href="https://scholsdev.azurewebsites.net/" target="_blank" class="credits">Created by FlamSoft</a> 
 </div>
 

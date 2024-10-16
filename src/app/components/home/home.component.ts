@@ -38,7 +38,7 @@ export class HomeComponent {
   savedConfigurations: any[] = [];
   newSaveName: string = "";
 
-  showGridSize: boolean = false;
+  showNewSketch: boolean = false;
   showCreateObject: boolean = false;
   showPredefinedObjects: boolean = false;
   showAvailableObjects: boolean = false;
@@ -47,6 +47,7 @@ export class HomeComponent {
   showNothing: boolean = false;
   showExportEmail: boolean = false;
 
+  toggleCreateObject: boolean = false;
   toggleViewObjects: boolean = false;
   viewObjects = true;
   isLoadedHack: boolean = false;
@@ -85,16 +86,9 @@ export class HomeComponent {
   }
 
   toggleGridSize() {
-    this.showGridSize = !this.showGridSize;
-    if (this.showGridSize) {
-      this.resetOtherOptions('gridSize');
-    }
-  }
-  
-  toggleCreateObject() {
-    this.showCreateObject = !this.showCreateObject;
-    if (this.showCreateObject) {
-      this.resetOtherOptions('createObject');
+    this.showNewSketch = !this.showNewSketch;
+    if (this.showNewSketch) {
+      this.resetOtherOptions('newSketch');
     }
   }
   
@@ -135,8 +129,7 @@ export class HomeComponent {
   
   resetOtherOptions(activeOption: string) {
     this.showNothing = activeOption === 'clear';
-    this.showGridSize = activeOption === 'gridSize';
-    this.showCreateObject = activeOption === 'createObject';
+    this.showNewSketch = activeOption === 'newSketch';
     this.showPredefinedObjects = activeOption === 'predefinedObjects';
     this.showAvailableObjects = activeOption === 'availableObjects';
     this.showResize = activeOption === 'resize';
@@ -149,6 +142,10 @@ export class HomeComponent {
     this.viewObjects = !this.viewObjects;
   }
 
+  setCreateObject(){
+    this.toggleCreateObject = !this.toggleCreateObject;
+  }
+
   addPredefinedItem(selectedPredefinedItem: DrawableObject) {
     if (selectedPredefinedItem) {
       const x = 0; 
@@ -158,7 +155,6 @@ export class HomeComponent {
         selectedPredefinedItem.width / 3,
         selectedPredefinedItem.height / 3,
         selectedPredefinedItem.image,
-        selectedPredefinedItem.mustTouchWall,
         x,
         y
       );
@@ -201,6 +197,7 @@ export class HomeComponent {
     }
   }
 
+  
   rotateObject() {
     if (this.selectedItem) {
       this.selectedItem.rotated = !this.selectedItem.rotated;
@@ -252,18 +249,18 @@ export class HomeComponent {
   }
 
   onMouseDown(index: number): void {
-    this.isMouseDown = true;
-    this.toggleCellState(index);
+    // this.isMouseDown = true;
+    // this.toggleCellState(index);
   }
 
   onMouseUp(): void {
-    this.isMouseDown = false;
+    // this.isMouseDown = false;
   }
 
   onMouseOver(index: number): void {
-    if (this.isMouseDown) {
-      this.toggleCellState(index);
-    }
+    // if (this.isMouseDown) {
+    //   this.toggleCellState(index);
+    // }
   }
 
   toggleCellState(index: number): void {
@@ -290,7 +287,6 @@ export class HomeComponent {
         y: item.y,
         image: item.image,
         rotation: item.rotation,
-        mustTouchWall: item.mustTouchWall,
         unlocked: item.unlocked,
       }))
     };
@@ -322,8 +318,8 @@ export class HomeComponent {
         unlocked: item.unlocked,
       }));
       
-      itemsToLoad.forEach((item: { name: string; width: number; height: number; image: string; mustTouchWall: boolean; rotation: number | undefined; x: number | undefined; y: number | undefined; unlocked: boolean | undefined; }) => {
-        this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.mustTouchWall, item.rotation, item.x, item.y, true, item.unlocked);
+      itemsToLoad.forEach((item: { name: string; width: number; height: number; image: string; rotation: number | undefined; x: number | undefined; y: number | undefined; unlocked: boolean | undefined; }) => {
+        this.objectService.addObject(item.name, item.width / (this.gridCellSize / 10), item.height / (this.gridCellSize / 10), item.image, item.rotation, item.x, item.y, true, item.unlocked);
       });
       
       this.items = this.objectService.getObjects();

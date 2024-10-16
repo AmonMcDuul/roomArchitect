@@ -207,6 +207,10 @@ h3 {
   left: 21px; 
 }
 
+.create-objects-button {
+  margin-bottom: 10px;
+}
+
 
 .button-style{
   display: flex;
@@ -362,7 +366,7 @@ button:hover {
 }
 
 .inside-menu-item {
-  overflow: hidden; 
+  overflow: scroll; 
   max-height: 0; 
   transition: max-height 0.3s ease, padding 0.5s ease; 
   padding: 0 10px; 
